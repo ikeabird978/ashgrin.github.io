@@ -19,26 +19,32 @@ const menuList = [
 // 各页面内容配置
 const pageContent = {
     home: `
-        <h2>首页</h2>
-        <p>至上主义极简博客，克制留白，暖调干净风格。</p>
-        <p>整站由原生 JavaScript 动态渲染，无多余冗余代码。</p>
+        <h2>Homepage</h2>
+        <p>Is a blog about paint and some cg or math things I guess.</p>
+        <p>Trust me,I will up date this often.</p>
         <div class="line"></div>
         <p>设计理念：少即是多，剥离一切无效装饰。</p>
     `,
     about: `
-        <h2>关于我</h2>
-        <p>喜欢前端、原生JS、极简设计与整洁代码风格。</p>
-        <p>习惯用原生手写页面，拒绝臃肿框架。</p>
+        <h2>About Me</h2>
+        <p>Is 2026.5.17 now,I just insomina.</p>
+        <p>Since I have no things to do so I build this blog to record somethings.</p>
+        <p>Hope things can lucky.</p>
     `,
     note: `
-        <h2>学习笔记</h2>
+        <h2>Note</h2>
         <p>JavaScript / TypeScript / 前端布局随笔。</p>
         <p>GitHub Pages 静态网站部署经验记录。</p>
     `,
-    works: `
-        <h2>作品合集</h2>
-        <p>极简风格个人网页、静态博客、交互小页面。</p>
-        <p>全部采用原生 JS + 纯手写布局。</p>
+    Paints: `
+        <h2>Paints</h2>
+        <p>I guess I will put some paints on here.</p>
+
+    `,
+    Works: `
+        <h2>Works</h2>
+        <p>Work work,Okie dokie.</p>
+        <p>Our work never over.</p>
     `
 };
 
