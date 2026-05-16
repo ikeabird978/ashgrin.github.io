@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP SECRET | 绝密档案系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #39ff14;
+            font-family: "Courier New", monospace;
+            min-height: 100vh;
+        }
+
+        /* 整体布局：左菜单 + 右内容 */
+        .wrap {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* 左侧分类导航框 */
+        .left-menu {
+            width: 220px;
+            border: 1px solid #39ff14;
+            padding: 20px 10px;
+            margin: 15px;
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 18px;
+            color: #ff2222;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .menu-item {
+            display: block;
+            width: 100%;
+            background: #000;
+            border: 1px solid #39ff14;
+            color: #39ff14;
+            padding: 12px 8px;
+            margin: 10px 0;
+            text-align: center;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .menu-item:hover {
+            background: #39ff14;
+            color: #000;
+        }
+
+        .menu-item.active {
+            background: #113311;
+            border-color: #fff;
+        }
+
+        /* 右侧主内容区 */
+        .main-content {
+            flex: 1;
+            border: 1px solid #39ff14;
+            margin: 15px 15px 15px 0;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .top-secret {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff2222;
+            animation: blink 1s infinite;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .warning {
+            border: 1px solid #ff2222;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            color: #ff4444;
+        }
+
+        .divider {
+            height: 1px;
+            background: #39ff14;
+            margin: 30px 0;
+        }
+
+        /* 所有页面默认隐藏 */
+        .page {
+            display: none;
+        }
+
+        /* 当前激活页面显示 */
+        .page.active {
+            display: block;
+        }
+
+        .stamp {
+            float: right;
+            border: 3px solid #ff2222;
+            color: #ff2222;
+            padding: 10px 15px;
+            transform: rotate(15deg);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <!-- 左侧分类菜单 -->
+        <div class="left-menu">
+            <div class="menu-title">【涉密导航栏】</div>
+            <div class="menu-item active" data-page="page1">档案首页</div>
+            <div class="menu-item" data-page="page2">个人机密资料</div>
+            <div class="menu-item" data-page="page3">访问日志记录</div>
+            <div class="menu-item" data-page="page4">保密协议条款</div>
+            <div class="menu-item" data-page="page5">系统权限状态</div>
+        </div>
+
+        <!-- 右侧内容区域（切换页面） -->
+        <div class="main-content">
+            <div class="top-secret">TOP SECRET 最高机密</div>
+
+            <div class="warning">
+                严禁未经授权访问 | UNAUTHORIZED ACCESS PROHIBITED<br>
+                违规行为将被永久备案追踪
+            </div>
+
+            <!-- 页面1：档案首页 -->
+            <div class="page active" id="page1">
+                <div class="stamp">机密<br>A级</div>
+                <p>档案编号：FILE-2026-TOP-001</p>
+                <p>保密等级：最高机密 TOP SECRET</p>
+                <p>建档时间：2026-05-17</p>
+                <p>系统状态：加密运行 · 全程日志记录</p>
+                <div class="divider"></div>
+                <p>欢迎进入联邦涉密档案系统</p>
+                <p>请从左侧分类栏选择查阅项目</p>
+            </div>
+
+            <!-- 页面2：个人机密资料 -->
+            <div class="page" id="page2">
+                <h3>个人涉密备案信息</h3>
+                <div class="divider"></div>
+                <p>身份编号：UNKNOWN-XXXX</p>
+                <p>权限等级：LV-3 内部查阅级</p>
+                <p>备案属地：网络安全信息库</p>
+                <p>资料状态：已加密封存</p>
+            </div>
+
+            <!-- 页面3：访问日志记录 -->
+            <div class="page" id="page3">
+                <h3>系统访问日志</h3>
+                <div class="divider"></div>
+                <p>最近访问时间：2026-05-17</p>
+                <p>接入终端：未知涉密终端</p>
+                <p>访问IP：已隐匿保护</p>
+                <p>操作记录：正常浏览档案</p>
+            </div>
+
+            <!-- 页面4：保密协议条款 -->
+            <div class="page" id="page4">
+                <h3>涉密保密协议</h3>
+                <div class="divider"></div>
+                <p>1. 禁止私自截图、转发机密内容</p>
+                <p>2. 禁止向未授权人员透露档案信息</p>
+                <p>3. 所有访问行为自动存入系统日志</p>
+                <p>4. 违规将注销访问权限并追责</p>
+            </div>
+
+            <!-- 页面5：系统权限状态 -->
+            <div class="page" id="page5">
+                <h3>系统权限监测</h3>
+                <div class="divider"></div>
+                <p>防火墙状态：已开启</p>
+                <p>数据加密：AES-256 启用</p>
+                <p>入侵检测：正常无异常</p>
+                <p>账号权限：合法有效</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 菜单切换逻辑
+        const menuItems = document.querySelectorAll('.menu-item');
+        const pages = document.querySelectorAll('.page');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // 移除所有选中状态
+                menuItems.forEach(m => m.classList.remove('active'));
+                pages.forEach(p => p.classList.remove('active'));
+
+                // 添加当前选中
+                item.classList.add('active');
+                const targetPage = item.getAttribute('data-page');
+                document.getElementById(targetPage).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
