@@ -13,7 +13,7 @@ const menuList = [
     { id: "home", name: "Home" },
     { id: "about", name: "About Me" },
     { id: "note", name: "Note" },
-    { id: "paint", name: "Paint" },
+    { id: "paints", name: "Paint" },
     { id: "works", name: "Works" }
 ];
 
@@ -37,12 +37,12 @@ const pageContent = {
         <p>JavaScript / TypeScript / 前端布局随笔。</p>
         <p>GitHub Pages 静态网站部署经验记录。</p>
     `,
-    Paints: `
+    paints: `
         <h2>Paints</h2>
         <p>I guess I will put some paints on here.</p>
 
     `,
-    Works: `
+    works: `
         <h2>Works</h2>
         <p>Work work,Okie dokie.</p>
         <p>Our work never over.</p>
