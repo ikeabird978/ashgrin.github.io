@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOP SECRET | 绝密档案系统</title>
-    <style>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">Personal Blog | 极简至上<style>
+        /* 全局至上主义重置：极致极简、无冗余 */
         * {
             margin: 0;
             padding: 0;
@@ -12,208 +8,170 @@
         }
 
         body {
-            background: #000;
-            color: #39ff14;
-            font-family: "Courier New", monospace;
+            /* 暖色调基底：奶白暖杏高级底色 */
+            background-color: #F9F5F0;
+            color: #2D2A26;
+            font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* 全局布局 左右分栏 至上几何对称 */
+        .blog-wrap {
+            display: flex;
             min-height: 100vh;
         }
 
-        /* 整体布局：左菜单 + 右内容 */
-        .wrap {
-            display: flex;
-            height: 100vh;
+        /* 左侧导航栏 暖咖色块 至上规整几何 */
+        .sidebar {
+            width: 240px;
+            background-color: #EFE6DD;
+            padding: 60px 20px;
+            border-right: 1px solid #E0D6CC;
         }
 
-        /* 左侧分类导航框 */
-        .left-menu {
-            width: 220px;
-            border: 1px solid #39ff14;
-            padding: 20px 10px;
-            margin: 15px;
-        }
-
-        .menu-title {
+        .sidebar-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #8C6D5C;
             text-align: center;
-            font-size: 18px;
-            color: #ff2222;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
+            margin-bottom: 50px;
+            /* 至上极简线条装饰 */
+            padding-bottom: 15px;
+            border-bottom: 2px solid #D4C5B8;
         }
 
-        .menu-item {
+        /* 导航按钮 纯几何方块hover 无花哨动画 */
+        .nav-item {
             display: block;
             width: 100%;
-            background: #000;
-            border: 1px solid #39ff14;
-            color: #39ff14;
-            padding: 12px 8px;
-            margin: 10px 0;
+            padding: 14px 0;
+            margin: 8px 0;
             text-align: center;
-            cursor: pointer;
+            background: transparent;
+            border: none;
             font-size: 15px;
-            transition: 0.2s;
+            color: #5A4F47;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: 0.3s ease;
         }
 
-        .menu-item:hover {
-            background: #39ff14;
-            color: #000;
+        .nav-item:hover {
+            background-color: #D4C5B8;
+            color: #fff;
         }
 
-        .menu-item.active {
-            background: #113311;
-            border-color: #fff;
+        .nav-item.active {
+            background-color: #8C6D5C;
+            color: #FFFFFF;
         }
 
-        /* 右侧主内容区 */
-        .main-content {
+        /* 右侧主内容区 大量留白 至上核心 */
+        .main-box {
             flex: 1;
-            border: 1px solid #39ff14;
-            margin: 15px 15px 15px 0;
-            padding: 30px;
-            overflow-y: auto;
+            padding: 60px 80px;
         }
 
-        .top-secret {
-            text-align: center;
-            font-size: 32px;
-            font-weight: bold;
-            color: #ff2222;
-            animation: blink 1s infinite;
-            margin-bottom: 20px;
-            letter-spacing: 5px;
-        }
-
-        @keyframes blink {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .warning {
-            border: 1px solid #ff2222;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: center;
-            color: #ff4444;
-        }
-
-        .divider {
-            height: 1px;
-            background: #39ff14;
-            margin: 30px 0;
-        }
-
-        /* 所有页面默认隐藏 */
+        /* 页面默认隐藏 切换逻辑 */
         .page {
             display: none;
+            animation: fade 0.4s ease;
         }
 
-        /* 当前激活页面显示 */
         .page.active {
             display: block;
         }
 
-        .stamp {
-            float: right;
-            border: 3px solid #ff2222;
-            color: #ff2222;
-            padding: 10px 15px;
-            transform: rotate(15deg);
-            font-weight: bold;
+        @keyframes fade {
+            from {opacity: 0;}
+            to {opacity: 1;}
         }
-    </style>
-</head>
-<body>
-    <div class="wrap">
-        <!-- 左侧分类菜单 -->
-        <div class="left-menu">
-            <div class="menu-title">【涉密导航栏】</div>
-            <div class="menu-item active" data-page="page1">档案首页</div>
-            <div class="menu-item" data-page="page2">个人机密资料</div>
-            <div class="menu-item" data-page="page3">访问日志记录</div>
-            <div class="menu-item" data-page="page4">保密协议条款</div>
-            <div class="menu-item" data-page="page5">系统权限状态</div>
-        </div>
 
-        <!-- 右侧内容区域（切换页面） -->
-        <div class="main-content">
-            <div class="top-secret">TOP SECRET 最高机密</div>
+        /* 内容标题 极简几何排版 */
+        .page-title {
+            font-size: 28px;
+            color: #8C6D5C;
+            margin-bottom: 30px;
+            padding-left: 12px;
+            border-left: 4px solid #BFA998;
+        }
 
-            <div class="warning">
-                严禁未经授权访问 | UNAUTHORIZED ACCESS PROHIBITED<br>
-                违规行为将被永久备案追踪
-            </div>
+        /* 内容文本 极致留白行高 */
+        .content-text {
+            font-size: 16px;
+            line-height: 2;
+            color: #4A4540;
+            margin-bottom: 20px;
+        }
 
-            <!-- 页面1：档案首页 -->
-            <div class="page active" id="page1">
-                <div class="stamp">机密<br>A级</div>
-                <p>档案编号：FILE-2026-TOP-001</p>
-                <p>保密等级：最高机密 TOP SECRET</p>
-                <p>建档时间：2026-05-17</p>
-                <p>系统状态：加密运行 · 全程日志记录</p>
-                <div class="divider"></div>
-                <p>欢迎进入联邦涉密档案系统</p>
-                <p>请从左侧分类栏选择查阅项目</p>
-            </div>
+        /* 分割线 极简细线条 */
+        .divide {
+            width: 100px;
+            height: 1px;
+            background: #D4C5B8;
+            margin: 40px 0;
+        }
 
-            <!-- 页面2：个人机密资料 -->
-            <div class="page" id="page2">
-                <h3>个人涉密备案信息</h3>
-                <div class="divider"></div>
-                <p>身份编号：UNKNOWN-XXXX</p>
-                <p>权限等级：LV-3 内部查阅级</p>
-                <p>备案属地：网络安全信息库</p>
-                <p>资料状态：已加密封存</p>
-            </div>
+        /* 适配手机端 */
+        @media (max-width: 768px) {
+            .blog-wrap {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 30px 10px;
+            }
+            .main-box {
+                padding: 30px 20px;
+            }
+       </style><body<div class="blog-wrap">
+       <!-- 左侧固定导航栏 可点击切换 -->
+<div class="sidebar<div class="sidebar-title">MY B</div>
+           <button class="nav-item active" data-target="home</button>
+<button class="nav-item" data-target="about</button><button class="nav-item" data-target="</button<button class="nav-item" data-target="project">作品归档<button class="nav-item" data-target="contact">留言联系</button>
+        <!-- 右侧内容展示区 -->
+<div class="main<!-- 首页页面 -->
+            <div class="page active" id="home">
+               <h2 class="page-title">首页 · 首页</h2><p class="content-text">欢迎来到我的个人极简博客，遵循至上主义设计理念，摒弃一切冗余装饰，以极简、规整、纯粹的方式记录生活与技术。<p class="content-text">这里收录我的技术学习笔记、项目作品、日常随笔，所有内容保持干净、简洁、</p>
+<div class="div</div>
+               <p class="content-text">设计风格｜至上主义 · 极简几何 · </p><p class="content-text">更新状态｜</p></div>
 
-            <!-- 页面3：访问日志记录 -->
-            <div class="page" id="page3">
-                <h3>系统访问日志</h3>
-                <div class="divider"></div>
-                <p>最近访问时间：2026-05-17</p>
-                <p>接入终端：未知涉密终端</p>
-                <p>访问IP：已隐匿保护</p>
-                <p>操作记录：正常浏览档案</p>
-            </div>
-
-            <!-- 页面4：保密协议条款 -->
-            <div class="page" id="page4">
-                <h3>涉密保密协议</h3>
-                <div class="divider"></div>
-                <p>1. 禁止私自截图、转发机密内容</p>
-                <p>2. 禁止向未授权人员透露档案信息</p>
-                <p>3. 所有访问行为自动存入系统日志</p>
-                <p>4. 违规将注销访问权限并追责</p>
-            </div>
-
-            <!-- 页面5：系统权限状态 -->
-            <div class="page" id="page5">
-                <h3>系统权限监测</h3>
-                <div class="divider"></div>
-                <p>防火墙状态：已开启</p>
-                <p>数据加密：AES-256 启用</p>
-                <p>入侵检测：正常无异常</p>
-                <p>账号权限：合法有效</p>
-            </div>
-        </div>
-    </div>
-
+<!-- 关于我页面<div class="page" id="about<h2 class="page-title">关于</h2>
+<p class="content-text">一名热爱技术、热爱极简设计的创作者，专注图形学、编程开发与创意内容创作。</p>
+                <p class="content-text">信奉极简至上的设计理念：少即是多，摒弃无效装饰，保留核心本质。</p>
+                <div class="divide"></div>
+                <p class="content-text">擅长：前端设计、静态网页开发、图形学研究、</p>
+<p class="content-text">理念：纯粹、专注、持续精进</div><!-- 技术随笔<div class="page" id="<h2 class="page-title"></h2><p class="content-text">这里记录日常学习中的技术笔记、踩坑总结、算法与前端</p><div class="</div>
+<p class="content-text">· 前端极简</p><p class="content-text">· GitHub Pages 免费部署教程<p class="content-text">· 图形学与渲染原理学习</p>
+               <p class="content-text">· 编程语言实战经验</p>
+           <!-- 作品归档页面 -->
+<div class="page" id="project">
+<h2 class="page-title">作品归档</h2>
+                <p class="content-text">个人原创项目、网页设计、代码作品、创意创作</p>
+<div class="div</div>
+               <p class="content-text">· 极简风格个人博客（本项目）</p>
+                <p class="content-text">· 静态网页创意设计合集</p>
+                <p class="content-text">· 编程算法实践项目</p>
+            <!-- 留言联系页面 -->
+           <div class="page" id="contact">
+               <h2 class="page-title">留言 & 联系</h2>
+               <p class="content-text">欢迎交流技术、设计、创意相关内容！<div</div<p class="content-text">博客永久开源部署于 GitHub Pages</p>
+                <p class="content-text">所有设计遵循极简至上主义原则</p>
+            </div</div><!-- 页面切换JS逻辑 -->
     <script>
-        // 菜单切换逻辑
-        const menuItems = document.querySelectorAll('.menu-item');
+        const navItems = document.querySelectorAll('.nav-item');
         const pages = document.querySelectorAll('.page');
 
-        menuItems.forEach(item => {
+        navItems.forEach(item => {
             item.addEventListener('click', () => {
-                // 移除所有选中状态
-                menuItems.forEach(m => m.classList.remove('active'));
-                pages.forEach(p => p.classList.remove('active'));
+                // 清空所有选中状态
+                navItems.forEach(nav => nav.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('active'));
 
-                // 添加当前选中
+                // 激活当前页面
                 item.classList.add('active');
-                const targetPage = item.getAttribute('data-page');
-                document.getElementById(targetPage).classList.add('active');
-            });
-        });
-    </script>
-</body>
+                const pageId = item.dataset.target;
+                document.getElementById(pageId).classList.add('active');
+            })
+</script</body>
 </html>
