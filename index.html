@@ -1,6 +1,32 @@
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">Personal Blog | 极简至上<style>
-        /* 全局至上主义重置：极致极简、无冗余 */
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>至上主义 · 暖色博客 | Suprematist Warmth</title>
+    <style>
+        :root {
+            --bg-deep: #1a1410;
+            --bg-surface: #231e18;
+            --bg-card: #2a231c;
+            --text-primary: #f0e6d3;
+            --text-secondary: #c4b8a5;
+            --text-dim: #8a7e6f;
+            --accent-red: #e8533f;
+            --accent-orange: #f08c4a;
+            --accent-amber: #e0b354;
+            --accent-gold: #d4a43b;
+            --accent-coral: #e87a5e;
+            --accent-cream: #f5e8d1;
+            --geometric-stroke: #b8936e;
+            --shadow-warm: rgba(200, 120, 40, 0.12);
+            --font-geometric: 'Outfit', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            --font-mono: 'Space Mono', 'Courier New', 'Consolas', monospace;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -8,170 +34,750 @@
         }
 
         body {
-            /* 暖色调基底：奶白暖杏高级底色 */
-            background-color: #F9F5F0;
-            color: #2D2A26;
-            font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-            letter-spacing: 0.5px;
-        }
-
-        /* 全局布局 左右分栏 至上几何对称 */
-        .blog-wrap {
-            display: flex;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-geometric);
+            line-height: 1.6;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 左侧导航栏 暖咖色块 至上规整几何 */
-        .sidebar {
-            width: 240px;
-            background-color: #EFE6DD;
-            padding: 60px 20px;
-            border-right: 1px solid #E0D6CC;
+        /* 背景至上主义几何构图 */
+        .suprematist-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
         }
-
-        .sidebar-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #8C6D5C;
-            text-align: center;
-            margin-bottom: 50px;
-            /* 至上极简线条装饰 */
-            padding-bottom: 15px;
-            border-bottom: 2px solid #D4C5B8;
+        .suprematist-bg .geo-element {
+            position: absolute;
+            opacity: 0.14;
+            pointer-events: none;
         }
-
-        /* 导航按钮 纯几何方块hover 无花哨动画 */
-        .nav-item {
-            display: block;
-            width: 100%;
-            padding: 14px 0;
-            margin: 8px 0;
-            text-align: center;
-            background: transparent;
-            border: none;
-            font-size: 15px;
-            color: #5A4F47;
-            cursor: pointer;
+        /* 大圆 */
+        .geo-circle-1 {
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, var(--accent-orange), var(--accent-red));
+            top: -100px;
+            right: -80px;
+            filter: blur(35px);
+            animation: floatSlow 18s ease-in-out infinite;
+        }
+        .geo-circle-2 {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent-amber), var(--accent-gold));
+            bottom: -60px;
+            left: -70px;
+            filter: blur(30px);
+            animation: floatSlow 22s ease-in-out infinite reverse;
+        }
+        /* 矩形 */
+        .geo-rect-1 {
+            width: 180px;
+            height: 90px;
+            background: var(--accent-coral);
+            top: 25%;
+            left: 6%;
+            transform: rotate(18deg);
+            border-radius: 4px;
+            filter: blur(12px);
+            animation: driftRect 20s ease-in-out infinite;
+        }
+        .geo-rect-2 {
+            width: 130px;
+            height: 200px;
+            background: var(--accent-red);
+            bottom: 20%;
+            right: 8%;
+            transform: rotate(-25deg);
+            border-radius: 8px;
+            filter: blur(10px);
+            animation: driftRect 24s ease-in-out infinite reverse;
+        }
+        /* 细长三角 */
+        .geo-triangle-1 {
+            width: 0;
+            height: 0;
+            border-left: 90px solid transparent;
+            border-right: 90px solid transparent;
+            border-bottom: 160px solid rgba(224, 160, 60, 0.5);
+            top: 55%;
+            left: 15%;
+            transform: rotate(35deg);
+            filter: blur(8px);
+            animation: floatSlow 26s ease-in-out infinite;
+        }
+        /* 斜线 */
+        .geo-line-1 {
+            width: 250px;
+            height: 3px;
+            background: var(--accent-amber);
+            top: 70%;
+            right: 5%;
+            transform: rotate(-15deg);
             border-radius: 2px;
-            transition: 0.3s ease;
+            filter: blur(4px);
+            animation: driftLine 19s ease-in-out infinite;
         }
-
-        .nav-item:hover {
-            background-color: #D4C5B8;
-            color: #fff;
+        .geo-line-2 {
+            width: 300px;
+            height: 2.5px;
+            background: var(--accent-orange);
+            top: 15%;
+            left: 30%;
+            transform: rotate(50deg);
+            border-radius: 2px;
+            filter: blur(4px);
+            animation: driftLine 21s ease-in-out infinite reverse;
         }
-
-        .nav-item.active {
-            background-color: #8C6D5C;
-            color: #FFFFFF;
+        /* 小方块群 */
+        .geo-small-squares {
+            position: absolute;
+            top: 40%;
+            right: 18%;
+            display: flex;
+            gap: 18px;
+            opacity: 0.5;
+            filter: blur(3px);
+            animation: floatSlow 20s ease-in-out infinite;
         }
-
-        /* 右侧主内容区 大量留白 至上核心 */
-        .main-box {
-            flex: 1;
-            padding: 60px 80px;
-        }
-
-        /* 页面默认隐藏 切换逻辑 */
-        .page {
-            display: none;
-            animation: fade 0.4s ease;
-        }
-
-        .page.active {
+        .geo-small-squares span {
             display: block;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+            transform: rotate(45deg);
         }
 
-        @keyframes fade {
-            from {opacity: 0;}
-            to {opacity: 1;}
+        @keyframes floatSlow {
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+            25% {
+                transform: translateY(-30px) scale(1.04);
+            }
+            50% {
+                transform: translateY(-10px) scale(0.97);
+            }
+            75% {
+                transform: translateY(-40px) scale(1.03);
+            }
+        }
+        @keyframes driftRect {
+            0%,
+            100% {
+                transform: rotate(18deg) translate(0, 0);
+            }
+            33% {
+                transform: rotate(16deg) translate(25px, -15px);
+            }
+            66% {
+                transform: rotate(21deg) translate(-18px, 12px);
+            }
+        }
+        @keyframes driftLine {
+            0%,
+            100% {
+                transform: rotate(-15deg) translateX(0);
+            }
+            50% {
+                transform: rotate(-12deg) translateX(35px);
+            }
         }
 
-        /* 内容标题 极简几何排版 */
-        .page-title {
-            font-size: 28px;
-            color: #8C6D5C;
-            margin-bottom: 30px;
-            padding-left: 12px;
-            border-left: 4px solid #BFA998;
+        /* 主容器 */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 28px 80px;
         }
 
-        /* 内容文本 极致留白行高 */
-        .content-text {
-            font-size: 16px;
-            line-height: 2;
-            color: #4A4540;
+        /* 导航栏 - 至上主义几何风格 */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            margin-bottom: 50px;
+            background: rgba(35, 30, 24, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(180, 140, 100, 0.25);
+            border-radius: var(--radius-md);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            box-shadow: 0 8px 32px var(--shadow-warm);
+            transition: all var(--transition-smooth);
+        }
+        .nav-bar:hover {
+            border-color: rgba(210, 160, 80, 0.45);
+            box-shadow: 0 12px 40px rgba(200, 130, 50, 0.18);
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .nav-logo .geo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transform: rotate(45deg);
+            box-shadow: 0 6px 20px rgba(230, 90, 50, 0.4);
+            transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+        }
+        .nav-logo .geo-icon span {
+            display: block;
+            width: 18px;
+            height: 18px;
+            background: var(--accent-cream);
+            border-radius: 2px;
+            transform: rotate(-45deg);
+        }
+        .nav-logo:hover .geo-icon {
+            transform: rotate(45deg) scale(1.08);
+            box-shadow: 0 8px 28px rgba(240, 120, 50, 0.55);
+        }
+        .nav-logo .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--accent-cream);
+            text-transform: uppercase;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            position: relative;
+            padding: 6px 4px;
+            transition: color var(--transition-smooth);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-orange);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+            border-radius: 1px;
+        }
+        .nav-links a:hover {
+            color: var(--accent-cream);
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        .nav-links .active {
+            color: var(--accent-amber);
+        }
+
+        /* 头部区域 */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        .blog-header .suprematist-frame {
+            display: inline-block;
+            position: relative;
+            padding: 10px 40px;
+            margin-bottom: 18px;
+        }
+        .blog-header .suprematist-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 35px;
+            height: 35px;
+            border-top: 3px solid var(--accent-red);
+            border-left: 3px solid var(--accent-orange);
+            border-radius: 2px;
+        }
+        .blog-header .suprematist-frame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 35px;
+            height: 35px;
+            border-bottom: 3px solid var(--accent-amber);
+            border-right: 3px solid var(--accent-coral);
+            border-radius: 2px;
+        }
+        .blog-header h1 {
+            font-family: var(--font-geometric);
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: var(--accent-cream);
+            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(220, 140, 60, 0.3);
+            line-height: 1.3;
+        }
+        .blog-header .subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            color: var(--accent-amber);
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+        .blog-header .geo-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .blog-header .geo-divider .line {
+            width: 60px;
+            height: 2px;
+            background: var(--accent-orange);
+            border-radius: 1px;
+        }
+        .blog-header .geo-divider .square {
+            width: 12px;
+            height: 12px;
+            background: var(--accent-red);
+            transform: rotate(45deg);
+            border-radius: 1px;
+        }
+        .blog-header .geo-divider .circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-amber);
+        }
+
+        /* 特色文章大卡片 */
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 55px;
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(190, 150, 110, 0.25);
+            box-shadow: 0 16px 48px var(--shadow-warm);
+            transition: all var(--transition-smooth);
+        }
+        .featured-post:hover {
+            border-color: rgba(220, 170, 100, 0.45);
+            box-shadow: 0 22px 56px rgba(210, 140, 60, 0.2);
+            transform: translateY(-3px);
+        }
+        .featured-post .featured-image {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-orange), var(--accent-amber));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 280px;
+            overflow: hidden;
+        }
+        .featured-post .featured-image .geo-art {
+            width: 140px;
+            height: 140px;
+            background: rgba(255, 240, 220, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            backdrop-filter: blur(4px);
+            animation: pulseWarm 4s ease-in-out infinite;
+        }
+        .featured-post .featured-image .geo-art::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            background: var(--accent-cream);
+            transform: rotate(45deg);
+            border-radius: 3px;
+        }
+        @keyframes pulseWarm {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.85;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 1;
+            }
+        }
+        .featured-post .featured-content {
+            padding: 35px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .featured-post .featured-tag {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .featured-post .featured-content h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent-cream);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .featured-post .featured-content p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .featured-post .featured-content .read-more {
+            align-self: flex-start;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--accent-amber);
+            text-decoration: none;
+            text-transform: uppercase;
+            border-bottom: 1.5px solid transparent;
+            padding-bottom: 4px;
+            transition: all var(--transition-smooth);
+        }
+        .featured-post .featured-content .read-more:hover {
+            border-bottom-color: var(--accent-amber);
+            color: var(--accent-cream);
         }
 
-        /* 分割线 极简细线条 */
-        .divide {
-            width: 100px;
-            height: 1px;
-            background: #D4C5B8;
-            margin: 40px 0;
+        /* 博客文章网格 */
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            margin-bottom: 60px;
+        }
+        .post-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(170, 140, 110, 0.2);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: all var(--transition-smooth);
+            position: relative;
+            box-shadow: 0 8px 28px var(--shadow-warm);
+        }
+        .post-card:hover {
+            border-color: rgba(210, 160, 100, 0.4);
+            box-shadow: 0 16px 42px rgba(200, 130, 50, 0.18);
+            transform: translateY(-5px);
+        }
+        /* 至上主义装饰角 */
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-top: 2px solid var(--accent-orange);
+            border-right: 2px solid var(--accent-red);
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity var(--transition-smooth);
+            pointer-events: none;
+        }
+        .post-card:hover::before {
+            opacity: 1;
+        }
+        .post-card .card-image {
+            height: 180px;
+            background: linear-gradient(150deg, #3a2a1c, #5a3a28, #4a3020);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .post-card .card-image .mini-geo {
+            width: 60px;
+            height: 60px;
+            background: rgba(240, 180, 100, 0.2);
+            border-radius: 8px;
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+        .post-card:hover .card-image .mini-geo {
+            transform: rotate(45deg) scale(1.2);
+            background: rgba(240, 180, 100, 0.35);
+        }
+        .post-card .card-body {
+            padding: 22px 20px 24px;
+        }
+        .post-card .card-meta {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .post-card .card-body h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: var(--accent-cream);
+            margin-bottom: 8px;
+            line-height: 1.45;
+        }
+        .post-card .card-body p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.6;
         }
 
-        /* 适配手机端 */
+        /* 页脚 */
+        .blog-footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(180, 140, 100, 0.2);
+            position: relative;
+        }
+        .blog-footer .geo-footer-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .blog-footer .geo-footer-icon .sq {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-red);
+            border-radius: 2px;
+            transform: rotate(45deg);
+        }
+        .blog-footer .geo-footer-icon .cr {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-amber);
+        }
+        .blog-footer .geo-footer-icon .tr {
+            width: 0;
+            height: 0;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+            border-bottom: 16px solid var(--accent-orange);
+        }
+        .blog-footer p {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        /* 响应式 */
         @media (max-width: 768px) {
-            .blog-wrap {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            .featured-post .featured-image {
+                min-height: 200px;
+            }
+            .nav-bar {
                 flex-direction: column;
+                gap: 14px;
+                padding: 16px 20px;
             }
-            .sidebar {
-                width: 100%;
-                padding: 30px 10px;
+            .nav-links {
+                gap: 18px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .main-box {
-                padding: 30px 20px;
+            .blog-header h1 {
+                font-size: 2rem;
+                letter-spacing: 3px;
             }
-       </style><body<div class="blog-wrap">
-       <!-- 左侧固定导航栏 可点击切换 -->
-<div class="sidebar<div class="sidebar-title">MY B</div>
-           <button class="nav-item active" data-target="home</button>
-<button class="nav-item" data-target="about</button><button class="nav-item" data-target="</button<button class="nav-item" data-target="project">作品归档<button class="nav-item" data-target="contact">留言联系</button>
-        <!-- 右侧内容展示区 -->
-<div class="main<!-- 首页页面 -->
-            <div class="page active" id="home">
-               <h2 class="page-title">首页 · 首页</h2><p class="content-text">欢迎来到我的个人极简博客，遵循至上主义设计理念，摒弃一切冗余装饰，以极简、规整、纯粹的方式记录生活与技术。<p class="content-text">这里收录我的技术学习笔记、项目作品、日常随笔，所有内容保持干净、简洁、</p>
-<div class="div</div>
-               <p class="content-text">设计风格｜至上主义 · 极简几何 · </p><p class="content-text">更新状态｜</p></div>
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 至上主义背景几何元素 -->
+    <div class="suprematist-bg" aria-hidden="true">
+        <div class="geo-element geo-circle-1"></div>
+        <div class="geo-element geo-circle-2"></div>
+        <div class="geo-element geo-rect-1"></div>
+        <div class="geo-element geo-rect-2"></div>
+        <div class="geo-element geo-triangle-1"></div>
+        <div class="geo-element geo-line-1"></div>
+        <div class="geo-element geo-line-2"></div>
+        <div class="geo-element geo-small-squares">
+            <span></span><span></span><span></span><span></span>
+        </div>
+    </div>
 
-<!-- 关于我页面<div class="page" id="about<h2 class="page-title">关于</h2>
-<p class="content-text">一名热爱技术、热爱极简设计的创作者，专注图形学、编程开发与创意内容创作。</p>
-                <p class="content-text">信奉极简至上的设计理念：少即是多，摒弃无效装饰，保留核心本质。</p>
-                <div class="divide"></div>
-                <p class="content-text">擅长：前端设计、静态网页开发、图形学研究、</p>
-<p class="content-text">理念：纯粹、专注、持续精进</div><!-- 技术随笔<div class="page" id="<h2 class="page-title"></h2><p class="content-text">这里记录日常学习中的技术笔记、踩坑总结、算法与前端</p><div class="</div>
-<p class="content-text">· 前端极简</p><p class="content-text">· GitHub Pages 免费部署教程<p class="content-text">· 图形学与渲染原理学习</p>
-               <p class="content-text">· 编程语言实战经验</p>
-           <!-- 作品归档页面 -->
-<div class="page" id="project">
-<h2 class="page-title">作品归档</h2>
-                <p class="content-text">个人原创项目、网页设计、代码作品、创意创作</p>
-<div class="div</div>
-               <p class="content-text">· 极简风格个人博客（本项目）</p>
-                <p class="content-text">· 静态网页创意设计合集</p>
-                <p class="content-text">· 编程算法实践项目</p>
-            <!-- 留言联系页面 -->
-           <div class="page" id="contact">
-               <h2 class="page-title">留言 & 联系</h2>
-               <p class="content-text">欢迎交流技术、设计、创意相关内容！<div</div<p class="content-text">博客永久开源部署于 GitHub Pages</p>
-                <p class="content-text">所有设计遵循极简至上主义原则</p>
-            </div</div><!-- 页面切换JS逻辑 -->
-    <script>
-        const navItems = document.querySelectorAll('.nav-item');
-        const pages = document.querySelectorAll('.page');
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 导航栏 -->
+        <nav class="nav-bar">
+            <a href="#" class="nav-logo">
+                <div class="geo-icon"><span></span></div>
+                <span class="logo-text">Supremus</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" class="active">文章</a></li>
+                <li><a href="#">档案</a></li>
+                <li><a href="#">关于</a></li>
+                <li><a href="#">联系</a></li>
+            </ul>
+        </nav>
 
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                // 清空所有选中状态
-                navItems.forEach(nav => nav.classList.remove('active'));
-                pages.forEach(page => page.classList.remove('active'));
+        <!-- 头部 -->
+        <header class="blog-header">
+            <div class="suprematist-frame">
+                <h1>暖色至上</h1>
+            </div>
+            <p class="subtitle">几何抽象 · 温度感知 · 纯粹形式</p>
+            <div class="geo-divider">
+                <span class="line"></span>
+                <span class="square"></span>
+                <span class="circle"></span>
+                <span class="line"></span>
+            </div>
+        </header>
 
-                // 激活当前页面
-                item.classList.add('active');
-                const pageId = item.dataset.target;
-                document.getElementById(pageId).classList.add('active');
-            })
-</script</body>
+        <!-- 特色文章 -->
+        <article class="featured-post">
+            <div class="featured-image">
+                <div class="geo-art"></div>
+            </div>
+            <div class="featured-content">
+                <span class="featured-tag">● 精选特稿</span>
+                <h2>红色方块与金色圆环：<br>至上主义的温度宣言</h2>
+                <p>当马列维奇的黑色方块浸入晚霞，几何抽象便有了体温。探索暖色调如何在纯粹形式中唤起情感的涌动。</p>
+                <a href="#" class="read-more">阅读全文 →</a>
+            </div>
+        </article>
+
+        <!-- 文章网格 -->
+        <div class="post-grid">
+            <!-- 文章卡片 1 -->
+            <article class="post-card">
+                <div class="card-image">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2026年5月 · 理论</span>
+                    <h3>琥珀色斜线：动态构图的温度梯度</h3>
+                    <p>斜线在至上主义中意味着运动。当斜线被赋予琥珀与珊瑚的暖调，空间便流动起热量的诗意。</p>
+                </div>
+            </article>
+            <!-- 文章卡片 2 -->
+            <article class="post-card">
+                <div class="card-image" style="background: linear-gradient(150deg, #4a2a1a, #6a3a20, #5a2a18);">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2026年4月 · 实践</span>
+                    <h3>至上主义室内：用几何温暖居住空间</h3>
+                    <p>将红、橙、金的几何色块引入室内设计，让抽象艺术成为日常生活的温度源泉。</p>
+                </div>
+            </article>
+            <!-- 文章卡片 3 -->
+            <article class="post-card">
+                <div class="card-image" style="background: linear-gradient(150deg, #3a2018, #5a3828, #4a2818);">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2026年3月 · 历史</span>
+                    <h3>超越黑色：至上主义色彩谱系的扩展</h3>
+                    <p>从黑到红，从冷到暖，至上主义色彩理论在二十世纪经历了一场静默的温度革命。</p>
+                </div>
+            </article>
+            <!-- 文章卡片 4 -->
+            <article class="post-card">
+                <div class="card-image" style="background: linear-gradient(150deg, #4a2818, #6a4028, #3a1c10);">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2026年2月 · 评论</span>
+                    <h3>金色圆与珊瑚方：二元对立的暖调和解</h3>
+                    <p>圆形与方形在至上主义中常被视为对立。暖色调的介入让这种对立化为互补的和谐。</p>
+                </div>
+            </article>
+            <!-- 文章卡片 5 -->
+            <article class="post-card">
+                <div class="card-image" style="background: linear-gradient(150deg, #3a2218, #5a3020, #4a2418);">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2026年1月 · 访谈</span>
+                    <h3>对话暖色抽象画家：几何是情感的容器</h3>
+                    <p>当代抽象艺术家谈如何用简洁的几何语言承载人类最原始的温度感受。</p>
+                </div>
+            </article>
+            <!-- 文章卡片 6 -->
+            <article class="post-card">
+                <div class="card-image" style="background: linear-gradient(150deg, #4a3020, #6a3a24, #5a2c1a);">
+                    <div class="mini-geo"></div>
+                </div>
+                <div class="card-body">
+                    <span class="card-meta">2025年12月 · 随笔</span>
+                    <h3>日落与方块：自然暖色与至上形式的共振</h3>
+                    <p>傍晚天空的渐变暖色与至上主义几何构图之间，存在着令人惊叹的视觉共鸣。</p>
+                </div>
+            </article>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="blog-footer">
+            <div class="geo-footer-icon">
+                <span class="sq"></span>
+                <span class="cr"></span>
+                <span class="tr"></span>
+            </div>
+            <p>Suprematist Warmth Blog &copy; 2026 · 几何有温度</p>
+        </footer>
+    </div>
+</body>
 </html>
