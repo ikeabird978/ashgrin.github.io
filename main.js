@@ -10,10 +10,11 @@ const COLOR = {
 
 // 页面菜单配置
 const menuList = [
-    { id: "home", name: "首页" },
-    { id: "about", name: "关于我" },
-    { id: "note", name: "学习笔记" },
-    { id: "works", name: "作品合集" }
+    { id: "home", name: "Home" },
+    { id: "about", name: "About Me" },
+    { id: "note", name: "Note" },
+    { id: "paint", name: "Paint" },
+    { id: "works", name: "Works" }
 ];
 
 // 各页面内容配置
