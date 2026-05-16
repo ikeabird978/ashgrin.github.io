@@ -13,7 +13,7 @@ const menuList = [
     { id: "home", name: "Home" },
     { id: "about", name: "About Me" },
     { id: "note", name: "Note" },
-    { id: "paints", name: "Paint" },
+    { id: "paints", name: "Paints" },
     { id: "works", name: "Works" }
 ];
 
