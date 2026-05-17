@@ -269,41 +269,92 @@ function bindSubTabEvents() {
     });
 }
 
-// ========== Canvas 背景动画（至上主义风格，含粉色） ==========
 function initCanvasAnimation() {
+    // ====================== 【常量配置】 ======================
+    const CANVAS_CONFIG = {
+        SHAPE_TYPES: {
+            CIRCLE: 0,
+            TRIANGLE: 1,
+            RECT: 2,
+            STAR: 3,      // 五角星
+            HEXAGON: 4,   // 正六边形
+            DIAMOND: 5    // 菱形
+        },
+        SHAPE_COUNT: 22,
+        BASE_SIZE: 20,
+        RANDOM_SIZE_RANGE: 40,
+        SHAPE_SCALE: 1,        // 全局缩放系数
+        MOVE_SPEED_COEFF: 1.2,
+        ROTATE_SPEED_COEFF: 0.02,
+        STROKE_STYLE: 'rgba(255,255,255,0.3)',
+        STROKE_WIDTH: 1.5
+    };
+
+    // ====================== 【✅ 所有图形顶点常量，可无限扩展】 ======================
+    const hFactor = Math.sqrt(3) / 2;
+    const SHAPE_VERTICES = {
+        // 矩形
+        RECT: [
+            { x: -1, y: -1 },{ x: 1, y: -1 },
+            { x: 1, y: 1 },{ x: -1, y: 1 }
+        ],
+        // 原版三角形（和你最初形状一致）
+        TRIANGLE: [
+            { x: 0,    y: -hFactor * 2/3 },
+            { x: -1,   y:  hFactor * 1/3 },
+            { x: 1,    y:  hFactor * 1/3 }
+        ],
+        // 五角星
+        STAR: [
+            {x:0,y:-1},{x:0.3,y:-0.3},{x:1,y:-0.2},{x:0.4,y:0.4},{x:0.6,y:1},
+            {x:0,y:0.7},{x:-0.6,y:1},{x:-0.4,y:0.4},{x:-1,y:-0.2},{x:-0.3,y:-0.3}
+        ],
+        // 正六边形
+        HEXAGON: (()=>{
+            const pts=[];
+            for(let i=0;i<6;i++){
+                const a = (Math.PI/3)*i - Math.PI/2;
+                pts.push({x:Math.cos(a),y:Math.sin(a)});
+            }
+            return pts;
+        })(),
+        // 菱形
+        DIAMOND: [
+            {x:0,y:-1},{x:1,y:0},{x:0,y:1},{x:-1,y:0}
+        ]
+    };
+
+    // 至上主义颜色池
+    const colors = [
+        'rgba(0, 0, 0, 1)',
+        'rgba(255, 255, 255, 1)',
+        'rgba(200, 0, 0, 1)',
+        'rgba(0, 80, 200, 1)',
+        'rgba(220, 180, 0, 1)',
+        'rgba(230, 100, 160, 1)',
+        'rgba(180, 0, 0, 1)',
+        'rgba(0, 0, 0, 1)'
+    ];
+
     const canvas = document.createElement('canvas');
     canvas.id = 'bgCanvas';
     document.body.appendChild(canvas);
-
     const ctx = canvas.getContext('2d');
     let width, height;
 
-    // 至上主义颜色池（包含粉色）
-    const colors = [
-        'rgba(0, 0, 0, 1)',        // 黑
-        'rgba(255, 255, 255, 1)',  // 白
-        'rgba(200, 0, 0, 1)',      // 红
-        'rgba(0, 80, 200, 1)',     // 蓝
-        'rgba(220, 180, 0, 1)',    // 黄
-        'rgba(230, 100, 160, 1)',  // 粉
-        'rgba(180, 0, 0, 1)',      // 深红
-        'rgba(0, 0, 0, 1)'          // 浅黑（微妙对比）
-    ];
-
     class Shape {
-        constructor() {
-            this.reset();
-        }
+        constructor() { this.reset(); }
         reset() {
-            this.type = Math.floor(Math.random() * 3); // 0圆 1三角 2矩形
-            this.size = 20 + Math.random() * 40;
+            // 随机 0~5 所有图形
+            this.type = Math.floor(Math.random() * 6);
+            this.size = (CANVAS_CONFIG.BASE_SIZE + Math.random() * CANVAS_CONFIG.RANDOM_SIZE_RANGE) * CANVAS_CONFIG.SHAPE_SCALE;
             this.x = this.size + Math.random() * (width - this.size * 2);
             this.y = this.size + Math.random() * (height - this.size * 2);
-            this.vx = (Math.random() - 0.5) * 1.2;
-            this.vy = (Math.random() - 0.5) * 1.2;
+            this.vx = (Math.random() - 0.5) * CANVAS_CONFIG.MOVE_SPEED_COEFF;
+            this.vy = (Math.random() - 0.5) * CANVAS_CONFIG.MOVE_SPEED_COEFF;
             this.color = colors[Math.floor(Math.random() * colors.length)];
             this.angle = Math.random() * Math.PI * 2;
-            this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+            this.rotationSpeed = (Math.random() - 0.5) * CANVAS_CONFIG.ROTATE_SPEED_COEFF;
         }
         update() {
             this.x += this.vx;
@@ -315,25 +366,37 @@ function initCanvasAnimation() {
             if (this.y - this.size < 0) { this.y = this.size; this.vy *= -1; }
             else if (this.y + this.size > height) { this.y = height - this.size; this.vy *= -1; }
         }
+
         draw(ctx) {
             ctx.save();
             ctx.translate(this.x, this.y);
             ctx.rotate(this.angle);
             ctx.fillStyle = this.color;
-            ctx.strokeStyle = 'rgba(255,255,255,0.3)'; // 白色描边增强对比
-            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = CANVAS_CONFIG.STROKE_STYLE;
+            ctx.lineWidth = CANVAS_CONFIG.STROKE_WIDTH;
             ctx.beginPath();
-            if (this.type === 0) {
+
+            // 圆形：原生 arc
+            if (this.type === CANVAS_CONFIG.SHAPE_TYPES.CIRCLE) {
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-            } else if (this.type === 1) {
-                const h = this.size * Math.sqrt(3) / 2;
-                ctx.moveTo(0, -h * 2/3);
-                ctx.lineTo(-this.size, h * 1/3);
-                ctx.lineTo(this.size, h * 1/3);
-                ctx.closePath();
             } else {
-                ctx.rect(-this.size, -this.size, this.size * 2, this.size * 2);
+                // 其他全部用顶点绘制
+                let verts;
+                switch(this.type){
+                    case CANVAS_CONFIG.SHAPE_TYPES.TRIANGLE: verts = SHAPE_VERTICES.TRIANGLE; break;
+                    case CANVAS_CONFIG.SHAPE_TYPES.RECT: verts = SHAPE_VERTICES.RECT; break;
+                    case CANVAS_CONFIG.SHAPE_TYPES.STAR: verts = SHAPE_VERTICES.STAR; break;
+                    case CANVAS_CONFIG.SHAPE_TYPES.HEXAGON: verts = SHAPE_VERTICES.HEXAGON; break;
+                    case CANVAS_CONFIG.SHAPE_TYPES.DIAMOND: verts = SHAPE_VERTICES.DIAMOND; break;
+                }
+                verts.forEach((p, i)=>{
+                    const px = p.x * this.size;
+                    const py = p.y * this.size;
+                    i===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
+                });
+                ctx.closePath();
             }
+
             ctx.fill();
             ctx.stroke();
             ctx.restore();
@@ -341,8 +404,6 @@ function initCanvasAnimation() {
     }
 
     const shapes = [];
-    const SHAPE_COUNT = 20;
-
     function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
@@ -352,7 +413,7 @@ function initCanvasAnimation() {
     window.addEventListener('resize', resize);
     resize();
 
-    for (let i = 0; i < SHAPE_COUNT; i++) {
+    for (let i = 0; i < CANVAS_CONFIG.SHAPE_COUNT; i++) {
         shapes.push(new Shape());
     }
 
@@ -370,10 +431,8 @@ function initCanvasAnimation() {
                     const overlap = minDist - dist;
                     const moveX = Math.cos(angle) * overlap * 0.5;
                     const moveY = Math.sin(angle) * overlap * 0.5;
-                    a.x += moveX;
-                    a.y += moveY;
-                    b.x -= moveX;
-                    b.y -= moveY;
+                    a.x += moveX; a.y += moveY;
+                    b.x -= moveX; b.y -= moveY;
 
                     const nx = dx / dist;
                     const ny = dy / dist;
