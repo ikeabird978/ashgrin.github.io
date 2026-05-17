@@ -121,8 +121,6 @@ function createStyle() {
             z-index: 1;
             /* 增加半透明底色，让文字更清晰 */
             background: rgba(249, 245, 240, 0.35);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
         }
         .page { display: none; }
         .page.show { display: block; }
