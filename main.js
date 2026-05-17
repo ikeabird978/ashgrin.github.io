@@ -122,7 +122,7 @@ function createStyle() {
             position: relative;
             z-index: 1;
             /* 增加半透明底色，让文字更清晰 */
-            background: rgba(249, 245, 240, 0.35);
+            background: rgba(249, 245, 240, 0);
         }
         .page { display: none; }
         .page.show { display: block; }
