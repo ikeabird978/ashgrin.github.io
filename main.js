@@ -17,7 +17,7 @@ const menuList = [
     { id: "works", name: "Works" }
 ];
 
-// 各页面内容配置
+// 各页面内容配置（已集成子界面与图片）
 const pageContent = {
     home: `
         <h2>Homepage</h2>
@@ -40,12 +40,26 @@ const pageContent = {
     paints: `
         <h2>Paints</h2>
         <p>I guess I will put some paints on here.</p>
-
+        <!-- 子界面标签按钮 -->
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active" data-sub="paintA">Paint A</button>
+            <button class="sub-tab-btn" data-sub="paintB">Paint B</button>
+        </div>
+        <!-- 子界面内容区 -->
+        <div class="sub-page" id="paintA" style="display:block;">
+            <p>这里是 Paint A 的系列作品。</p>
+            <img src="images/paint-a-demo.jpg" alt="Paint A 示例" class="content-img" />
+        </div>
+        <div class="sub-page" id="paintB" style="display:none;">
+            <p>这里是 Paint B 的系列作品。</p>
+            <img src="images/paint-b-demo.jpg" alt="Paint B 示例" class="content-img" />
+        </div>
     `,
     works: `
         <h2>Works</h2>
         <p>Work work,Okie dokie.</p>
         <p>Our work never over.</p>
+        <img src="images/work-demo.jpg" alt="工作示例" class="content-img" />
     `
 };
 
@@ -121,6 +135,41 @@ function createStyle() {
             margin: 35px 0;
         }
 
+        /* 子标签样式 */
+        .sub-tabs { margin: 20px 0; }
+        .sub-tab-btn {
+            background: transparent;
+            border: 1px solid ${COLOR.line};
+            color: #5A4F47;
+            padding: 6px 16px;
+            margin-right: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+        .sub-tab-btn.active {
+            background: ${COLOR.theme};
+            color: #fff;
+            border-color: ${COLOR.theme};
+        }
+        .sub-tab-btn:hover:not(.active) {
+            background: ${COLOR.line};
+            color: #fff;
+        }
+        .sub-page { margin-top: 16px; }
+
+        /* 图片样式 */
+        .content-img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 6px;
+            border: 1px solid ${COLOR.line};
+            box-shadow: 2px 4px 12px rgba(139, 109, 93, 0.15);
+        }
+
         @media (max-width:768px) {
             .wrap { flex-direction: column; }
             .sidebar { width: 100%; }
@@ -132,11 +181,9 @@ function createStyle() {
 
 // ========== 渲染页面结构 ==========
 function renderPage() {
-    // 外层容器
     const wrap = document.createElement("div");
     wrap.className = "wrap";
 
-    // 侧边栏
     const sidebar = document.createElement("aside");
     sidebar.className = "sidebar";
 
@@ -145,7 +192,6 @@ function renderPage() {
     title.innerText = "MY BLOG";
     sidebar.appendChild(title);
 
-    // 渲染菜单按钮
     menuList.forEach((item, index) => {
         const btn = document.createElement("button");
         btn.className = "nav-btn" + (index === 0 ? " active" : "");
@@ -154,11 +200,9 @@ function renderPage() {
         sidebar.appendChild(btn);
     });
 
-    // 主内容区
     const main = document.createElement("main");
     main.className = "main";
 
-    // 渲染每个页面
     menuList.forEach(item => {
         const page = document.createElement("div");
         page.className = "page" + (item.id === "home" ? " show" : "");
@@ -172,18 +216,16 @@ function renderPage() {
     document.body.appendChild(wrap);
 }
 
-// ========== 页面切换逻辑 ==========
+// ========== 主菜单切换逻辑 ==========
 function bindEvent() {
     const btns = document.querySelectorAll(".nav-btn");
     const pages = document.querySelectorAll(".page");
 
     btns.forEach(btn => {
         btn.addEventListener("click", () => {
-            // 清除选中
             btns.forEach(b => b.classList.remove("active"));
             pages.forEach(p => p.classList.remove("show"));
 
-            // 激活当前
             btn.classList.add("active");
             const id = btn.dataset.id;
             document.getElementById(id).classList.add("show");
@@ -191,9 +233,31 @@ function bindEvent() {
     });
 }
 
+// ========== 子界面切换逻辑（事件委托） ==========
+function bindSubTabEvents() {
+    const main = document.querySelector('.main');
+    main.addEventListener('click', (e) => {
+        if (e.target.classList.contains('sub-tab-btn')) {
+            // 切换按钮激活状态
+            const allSubBtns = document.querySelectorAll('.sub-tab-btn');
+            allSubBtns.forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // 切换子内容显示
+            const subId = e.target.dataset.sub;
+            document.querySelectorAll('.sub-page').forEach(sp => {
+                sp.style.display = 'none';
+            });
+            const targetSub = document.getElementById(subId);
+            if (targetSub) targetSub.style.display = 'block';
+        }
+    });
+}
+
 // ========== 入口执行 ==========
 (function init() {
     createStyle();
     renderPage();
-    bindEvent();
+    bindEvent();        // 主页面切换
+    bindSubTabEvents(); // 子界面切换
 })();
