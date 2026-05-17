@@ -1,3 +1,12 @@
+// ========== 配色配置 暖色调至上主义（已改为rgb/rgba，背景半透明） ==========
+const COLOR = {
+    bg: "rgba(249, 245, 240, 0.5)",          // 原 #F9F5F0，透明度0.5
+    sidebarBg: "rgba(239, 230, 221, 0.5)",    // 原 #EFE6DD，透明度0.5
+    mainText: "rgb(45, 42, 38)",              // #2D2A26
+    subText: "rgb(74, 69, 64)",               // #4A4540
+    theme: "rgb(140, 109, 92)",               // #8C6D5C
+    line: "rgb(212, 197, 184)"                // #D4C5B8
+};
 
 // 页面菜单配置
 const menuList = [
@@ -52,7 +61,7 @@ const pageContent = {
     `
 };
 
-// ========== 创建全局样式（全部改用rgb/rgba） ==========
+// ========== 创建全局样式（全部改用rgb/rgba，无模糊） ==========
 function createStyle() {
     const style = document.createElement("style");
     style.textContent = `
@@ -73,7 +82,6 @@ function createStyle() {
             border-right: 1px solid ${COLOR.line};
             position: relative;
             z-index: 1;
-
         }
         .sidebar-title {
             font-size: 20px;
@@ -110,8 +118,8 @@ function createStyle() {
             padding: 60px 70px;
             position: relative;
             z-index: 1;
-            /* 增加半透明底色，让文字更清晰 */
-            background: rgba(249, 245, 240, 0.1);
+            background: rgba(249, 245, 240, 0.35);
+            /* 模糊已移除 */
         }
         .page { display: none; }
         .page.show { display: block; }
@@ -261,7 +269,7 @@ function bindSubTabEvents() {
     });
 }
 
-// ========== Canvas 背景动画（几何体漂流碰撞） ==========
+// ========== Canvas 背景动画（至上主义风格，含粉色） ==========
 function initCanvasAnimation() {
     const canvas = document.createElement('canvas');
     canvas.id = 'bgCanvas';
@@ -270,19 +278,17 @@ function initCanvasAnimation() {
     const ctx = canvas.getContext('2d');
     let width, height;
 
-
-// ========== 配色配置 暖色调至上主义（已改为rgb/rgba，背景半透明） ==========
-const colors = [
-    'rgba(0, 0, 0, 0.65)',        // 黑
-    'rgba(255, 255, 255, 0.65)',  // 白
-    'rgba(200, 0, 0, 0.65)',      // 红
-    'rgba(0, 80, 200, 0.65)',     // 蓝
-    'rgba(220, 180, 0, 0.65)',    // 黄
-    'rgba(230, 100, 160, 0.65)',  // 粉（新增）
-    'rgba(180, 0, 0, 0.55)',      // 深红
-    'rgba(0, 0, 0, 0.3)'          // 浅黑
-];
-
+    // 至上主义颜色池（包含粉色）
+    const colors = [
+        'rgba(0, 0, 0, 0.65)',        // 黑
+        'rgba(255, 255, 255, 0.65)',  // 白
+        'rgba(200, 0, 0, 0.65)',      // 红
+        'rgba(0, 80, 200, 0.65)',     // 蓝
+        'rgba(220, 180, 0, 0.65)',    // 黄
+        'rgba(230, 100, 160, 0.65)',  // 粉
+        'rgba(180, 0, 0, 0.55)',      // 深红
+        'rgba(0, 0, 0, 0.3)'          // 浅黑（微妙对比）
+    ];
 
     class Shape {
         constructor() {
@@ -314,8 +320,8 @@ const colors = [
             ctx.translate(this.x, this.y);
             ctx.rotate(this.angle);
             ctx.fillStyle = this.color;
-            ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)'; // 白色描边增强对比
+            ctx.lineWidth = 1.5;
             ctx.beginPath();
             if (this.type === 0) {
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
