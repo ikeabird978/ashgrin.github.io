@@ -47,8 +47,8 @@ const pageContent = {
         </div>
         <!-- 子界面内容区 -->
         <div class="sub-page" id="paintA" style="display:block;">
-            <p>这里是 Paint A 的系列作品。</p>
-            <img src="images/crabman.jpg" alt="Paint A 示例" class="content-img" />
+            <p>crab,haha.</p>
+            <img src="images/crabman.png" alt="Paint A 示例" class="content-img" />
         </div>
         <div class="sub-page" id="paintB" style="display:none;">
             <p>这里是 Paint B 的系列作品。</p>
