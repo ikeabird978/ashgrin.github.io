@@ -82,9 +82,7 @@ function createStyle() {
             border-right: 1px solid ${COLOR.line};
             position: relative;
             z-index: 1;
-            /* 可选毛玻璃效果增强层次 */
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+
         }
         .sidebar-title {
             font-size: 20px;
