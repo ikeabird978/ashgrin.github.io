@@ -1,11 +1,11 @@
-// ========== 配色配置 暖色调至上主义 ==========
+// ========== 配色配置 暖色调至上主义（已改为rgb/rgba，背景半透明） ==========
 const COLOR = {
-    bg: "#F9F5F0",
-    sidebarBg: "#EFE6DD",
-    mainText: "#2D2A26",
-    subText: "#4A4540",
-    theme: "#8C6D5C",
-    line: "#D4C5B8"
+    bg: "rgba(249, 245, 240, 0.5)",          // 原 #F9F5F0，透明度0.5
+    sidebarBg: "rgba(239, 230, 221, 0.5)",    // 原 #EFE6DD，透明度0.5
+    mainText: "rgb(45, 42, 38)",              // #2D2A26
+    subText: "rgb(74, 69, 64)",               // #4A4540
+    theme: "rgb(140, 109, 92)",               // #8C6D5C
+    line: "rgb(212, 197, 184)"                // #D4C5B8
 };
 
 // 页面菜单配置
@@ -17,7 +17,7 @@ const menuList = [
     { id: "works", name: "Works" }
 ];
 
-// 各页面内容配置（已集成子界面与图片）
+// 各页面内容配置
 const pageContent = {
     home: `
         <h2>Homepage</h2>
@@ -40,12 +40,10 @@ const pageContent = {
     paints: `
         <h2>Paints</h2>
         <p>I guess I will put some paints on here.</p>
-        <!-- 子界面标签按钮 -->
         <div class="sub-tabs">
             <button class="sub-tab-btn active" data-sub="paintA">Paint A</button>
             <button class="sub-tab-btn" data-sub="paintB">Paint B</button>
         </div>
-        <!-- 子界面内容区 -->
         <div class="sub-page" id="paintA" style="display:block;">
             <p>crab,haha.</p>
             <img src="images/crabman.png" alt="Paint A 示例" class="content-img" />
@@ -63,7 +61,7 @@ const pageContent = {
     `
 };
 
-// ========== 创建全局样式 ==========
+// ========== 创建全局样式（全部改用rgb/rgba） ==========
 function createStyle() {
     const style = document.createElement("style");
     style.textContent = `
@@ -72,7 +70,7 @@ function createStyle() {
             background: ${COLOR.bg};
             color: ${COLOR.mainText};
             font-family: system-ui, -apple-system, sans-serif;
-            position: relative; /* 为定位 canvas 提供参照 */
+            position: relative;
             overflow-x: hidden;
         }
         .wrap { display: flex; min-height: 100vh; }
@@ -83,7 +81,10 @@ function createStyle() {
             padding: 50px 15px;
             border-right: 1px solid ${COLOR.line};
             position: relative;
-            z-index: 1; /* 保证在 canvas 上方 */
+            z-index: 1;
+            /* 可选毛玻璃效果增强层次 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         }
         .sidebar-title {
             font-size: 20px;
@@ -100,7 +101,7 @@ function createStyle() {
             margin: 6px 0;
             border: none;
             background: transparent;
-            color: #5A4F47;
+            color: rgb(90, 79, 71);       /* 原 #5A4F47 */
             font-size: 15px;
             cursor: pointer;
             border-radius: 4px;
@@ -119,14 +120,18 @@ function createStyle() {
             flex: 1;
             padding: 60px 70px;
             position: relative;
-            z-index: 1; /* 保证在 canvas 上方 */
+            z-index: 1;
+            /* 增加半透明底色，让文字更清晰 */
+            background: rgba(249, 245, 240, 0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
         }
         .page { display: none; }
         .page.show { display: block; }
         .page h2 {
             color: ${COLOR.theme};
             margin-bottom: 25px;
-            border-left: 4px solid #BFA998;
+            border-left: 4px solid rgb(191, 169, 152);  /* 原 #BFA998 */
             padding-left: 12px;
         }
         .page p {
@@ -146,7 +151,7 @@ function createStyle() {
         .sub-tab-btn {
             background: transparent;
             border: 1px solid ${COLOR.line};
-            color: #5A4F47;
+            color: rgb(90, 79, 71);
             padding: 6px 16px;
             margin-right: 8px;
             border-radius: 4px;
@@ -183,8 +188,8 @@ function createStyle() {
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;       /* 最底层 */
-            pointer-events: none; /* 鼠标穿透 */
+            z-index: 0;
+            pointer-events: none;
         }
 
         @media (max-width:768px) {
@@ -269,7 +274,7 @@ function bindSubTabEvents() {
     });
 }
 
-// ========== Canvas 背景动画 ==========
+// ========== Canvas 背景动画（几何体漂流碰撞） ==========
 function initCanvasAnimation() {
     const canvas = document.createElement('canvas');
     canvas.id = 'bgCanvas';
@@ -278,7 +283,7 @@ function initCanvasAnimation() {
     const ctx = canvas.getContext('2d');
     let width, height;
 
-    // 暖色系颜色池
+    // 暖色系颜色池（rgba半透明）
     const colors = [
         'rgba(140,109,92,0.3)',   // theme
         'rgba(191,169,152,0.3)',  // 浅棕
@@ -288,25 +293,18 @@ function initCanvasAnimation() {
         'rgba(90,79,71,0.2)'     // 深暖灰
     ];
 
-    // 几何体类
     class Shape {
         constructor() {
             this.reset();
         }
         reset() {
-            // 随机形状类型：0 圆形，1 三角形，2 矩形
-            this.type = Math.floor(Math.random() * 3);
-            // 随机半径/边长 20~60
+            this.type = Math.floor(Math.random() * 3); // 0圆 1三角 2矩形
             this.size = 20 + Math.random() * 40;
-            // 随机位置（避开边缘）
             this.x = this.size + Math.random() * (width - this.size * 2);
             this.y = this.size + Math.random() * (height - this.size * 2);
-            // 随机速度
             this.vx = (Math.random() - 0.5) * 1.2;
             this.vy = (Math.random() - 0.5) * 1.2;
-            // 随机颜色
             this.color = colors[Math.floor(Math.random() * colors.length)];
-            // 随机旋转角度（仅矩形和三角形使用）
             this.angle = Math.random() * Math.PI * 2;
             this.rotationSpeed = (Math.random() - 0.5) * 0.02;
         }
@@ -315,21 +313,10 @@ function initCanvasAnimation() {
             this.y += this.vy;
             this.angle += this.rotationSpeed;
 
-            // 边界反弹
-            if (this.x - this.size < 0) {
-                this.x = this.size;
-                this.vx *= -1;
-            } else if (this.x + this.size > width) {
-                this.x = width - this.size;
-                this.vx *= -1;
-            }
-            if (this.y - this.size < 0) {
-                this.y = this.size;
-                this.vy *= -1;
-            } else if (this.y + this.size > height) {
-                this.y = height - this.size;
-                this.vy *= -1;
-            }
+            if (this.x - this.size < 0) { this.x = this.size; this.vx *= -1; }
+            else if (this.x + this.size > width) { this.x = width - this.size; this.vx *= -1; }
+            if (this.y - this.size < 0) { this.y = this.size; this.vy *= -1; }
+            else if (this.y + this.size > height) { this.y = height - this.size; this.vy *= -1; }
         }
         draw(ctx) {
             ctx.save();
@@ -340,17 +327,14 @@ function initCanvasAnimation() {
             ctx.lineWidth = 1;
             ctx.beginPath();
             if (this.type === 0) {
-                // 圆形
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
             } else if (this.type === 1) {
-                // 三角形
                 const h = this.size * Math.sqrt(3) / 2;
                 ctx.moveTo(0, -h * 2/3);
                 ctx.lineTo(-this.size, h * 1/3);
                 ctx.lineTo(this.size, h * 1/3);
                 ctx.closePath();
             } else {
-                // 矩形（正方形）
                 ctx.rect(-this.size, -this.size, this.size * 2, this.size * 2);
             }
             ctx.fill();
@@ -360,7 +344,7 @@ function initCanvasAnimation() {
     }
 
     const shapes = [];
-    const SHAPE_COUNT = 20; // 几何体数量
+    const SHAPE_COUNT = 20;
 
     function resize() {
         width = window.innerWidth;
@@ -371,12 +355,10 @@ function initCanvasAnimation() {
     window.addEventListener('resize', resize);
     resize();
 
-    // 初始化几何体
     for (let i = 0; i < SHAPE_COUNT; i++) {
         shapes.push(new Shape());
     }
 
-    // 碰撞检测与响应（基于包围圆）
     function handleCollisions() {
         for (let i = 0; i < shapes.length; i++) {
             for (let j = i + 1; j < shapes.length; j++) {
@@ -387,7 +369,6 @@ function initCanvasAnimation() {
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 const minDist = a.size + b.size;
                 if (dist < minDist && dist > 0.001) {
-                    // 将两个物体推开避免重叠
                     const angle = Math.atan2(dy, dx);
                     const overlap = minDist - dist;
                     const moveX = Math.cos(angle) * overlap * 0.5;
@@ -397,7 +378,6 @@ function initCanvasAnimation() {
                     b.x -= moveX;
                     b.y -= moveY;
 
-                    // 简单弹性交换速度分量（沿碰撞法线方向）
                     const nx = dx / dist;
                     const ny = dy / dist;
                     const dvx = a.vx - b.vx;
@@ -431,7 +411,7 @@ function initCanvasAnimation() {
 (function init() {
     createStyle();
     renderPage();
-    bindEvent();        // 主页面切换
-    bindSubTabEvents(); // 子界面切换
-    initCanvasAnimation(); // 背景动画
+    bindEvent();
+    bindSubTabEvents();
+    initCanvasAnimation();
 })();
