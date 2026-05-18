@@ -276,40 +276,31 @@ function initCanvasAnimation() {
             CIRCLE: 0,
             TRIANGLE: 1,
             RECT: 2,
-            STAR: 3,      // 五角星
-            HEXAGON: 4,   // 正六边形
-            DIAMOND: 5    // 菱形
+            HEXAGON: 3,   // 正六边形
+            DIAMOND: 4    // 菱形
         },
         SHAPE_COUNT: 22,
         BASE_SIZE: 20,
         RANDOM_SIZE_RANGE: 40,
-        SHAPE_SCALE: 1,        // 全局缩放系数
+        SHAPE_SCALE: 1,
         MOVE_SPEED_COEFF: 1.2,
         ROTATE_SPEED_COEFF: 0.02,
         STROKE_STYLE: 'rgba(255,255,255,0.3)',
         STROKE_WIDTH: 1.5
     };
 
-    // ====================== 【✅ 所有图形顶点常量，可无限扩展】 ======================
+    // ====================== 【图形顶点常量】 ======================
     const hFactor = Math.sqrt(3) / 2;
     const SHAPE_VERTICES = {
-        // 矩形
         RECT: [
             { x: -1, y: -1 },{ x: 1, y: -1 },
             { x: 1, y: 1 },{ x: -1, y: 1 }
         ],
-        // 原版三角形（和你最初形状一致）
         TRIANGLE: [
             { x: 0,    y: -hFactor * 2/3 },
             { x: -1,   y:  hFactor * 1/3 },
             { x: 1,    y:  hFactor * 1/3 }
         ],
-        // 五角星
-        STAR: [
-            {x:0,y:-1},{x:0.3,y:-0.3},{x:1,y:-0.2},{x:0.4,y:0.4},{x:0.6,y:1},
-            {x:0,y:0.7},{x:-0.6,y:1},{x:-0.4,y:0.4},{x:-1,y:-0.2},{x:-0.3,y:-0.3}
-        ],
-        // 正六边形
         HEXAGON: (()=>{
             const pts=[];
             for(let i=0;i<6;i++){
@@ -318,22 +309,36 @@ function initCanvasAnimation() {
             }
             return pts;
         })(),
-        // 菱形
         DIAMOND: [
             {x:0,y:-1},{x:1,y:0},{x:0,y:1},{x:-1,y:0}
         ]
     };
 
-    // 至上主义颜色池
-    const colors = [
-        'rgba(0, 0, 0, 1)',
-        'rgba(255, 255, 255, 1)',
-        'rgba(200, 0, 0, 1)',
-        'rgba(0, 80, 200, 1)',
-        'rgba(220, 180, 0, 1)',
-        'rgba(230, 100, 160, 1)',
-        'rgba(180, 0, 0, 1)',
-        'rgba(0, 0, 0, 1)'
+    // ====================== 【颜色组（可无限增加）】 ======================
+    const colorGroups = [
+        // 组 0：暖色调
+        [
+            'rgba(200, 0, 0, 1)',
+            'rgba(220, 80, 0, 1)',
+            'rgba(220, 180, 0, 1)',
+            'rgba(230, 100, 160, 1)',
+            'rgba(180, 60, 30, 1)',
+            'rgba(240, 120, 30, 1)',
+            'rgba(180, 0, 0, 1)',
+            'rgba(250, 210, 90, 1)'
+        ],
+        // 组 1：冷色调
+        [
+            'rgba(0, 80, 200, 1)',
+            'rgba(0, 130, 160, 1)',
+            'rgba(70, 0, 180, 1)',
+            'rgba(0, 150, 80, 1)',
+            'rgba(20, 60, 140, 1)',
+            'rgba(80, 180, 210, 1)',
+            'rgba(100, 0, 200, 1)',
+            'rgba(0, 100, 100, 1)'
+        ]
+        // 可继续添加更多组
     ];
 
     const canvas = document.createElement('canvas');
@@ -345,14 +350,18 @@ function initCanvasAnimation() {
     class Shape {
         constructor() { this.reset(); }
         reset() {
-            // 随机 0~5 所有图形
-            this.type = Math.floor(Math.random() * 6);
+            // 类型范围现在为 0~4（5种）
+            this.type = Math.floor(Math.random() * 5);
             this.size = (CANVAS_CONFIG.BASE_SIZE + Math.random() * CANVAS_CONFIG.RANDOM_SIZE_RANGE) * CANVAS_CONFIG.SHAPE_SCALE;
             this.x = this.size + Math.random() * (width - this.size * 2);
             this.y = this.size + Math.random() * (height - this.size * 2);
             this.vx = (Math.random() - 0.5) * CANVAS_CONFIG.MOVE_SPEED_COEFF;
             this.vy = (Math.random() - 0.5) * CANVAS_CONFIG.MOVE_SPEED_COEFF;
-            this.color = colors[Math.floor(Math.random() * colors.length)];
+
+            const groupIndex = Math.floor(Math.random() * colorGroups.length);
+            const selectedGroup = colorGroups[groupIndex];
+            this.color = selectedGroup[Math.floor(Math.random() * selectedGroup.length)];
+
             this.angle = Math.random() * Math.PI * 2;
             this.rotationSpeed = (Math.random() - 0.5) * CANVAS_CONFIG.ROTATE_SPEED_COEFF;
         }
@@ -376,16 +385,13 @@ function initCanvasAnimation() {
             ctx.lineWidth = CANVAS_CONFIG.STROKE_WIDTH;
             ctx.beginPath();
 
-            // 圆形：原生 arc
             if (this.type === CANVAS_CONFIG.SHAPE_TYPES.CIRCLE) {
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
             } else {
-                // 其他全部用顶点绘制
                 let verts;
                 switch(this.type){
                     case CANVAS_CONFIG.SHAPE_TYPES.TRIANGLE: verts = SHAPE_VERTICES.TRIANGLE; break;
                     case CANVAS_CONFIG.SHAPE_TYPES.RECT: verts = SHAPE_VERTICES.RECT; break;
-                    case CANVAS_CONFIG.SHAPE_TYPES.STAR: verts = SHAPE_VERTICES.STAR; break;
                     case CANVAS_CONFIG.SHAPE_TYPES.HEXAGON: verts = SHAPE_VERTICES.HEXAGON; break;
                     case CANVAS_CONFIG.SHAPE_TYPES.DIAMOND: verts = SHAPE_VERTICES.DIAMOND; break;
                 }
@@ -462,12 +468,3 @@ function initCanvasAnimation() {
     }
     animate();
 }
-
-// ========== 入口执行 ==========
-(function init() {
-    createStyle();
-    renderPage();
-    bindEvent();
-    bindSubTabEvents();
-    initCanvasAnimation();
-})();
