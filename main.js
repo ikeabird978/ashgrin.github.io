@@ -36,6 +36,45 @@ const pageContent = {
         <h2>Note</h2>
         <p>JavaScript / TypeScript / 前端布局随笔。</p>
         <p>GitHub Pages 静态网站部署经验记录。</p>
+        
+        <div class="sub-layout">
+            <div class="sub-sidebar">
+                <div class="sub-nav-item active" data-sub="paintA">
+                    <span class="nav-icon">●</span>
+                    <span>Crusader Kings III's Genetic System</span>
+                </div>
+                <div class="sub-nav-item" data-sub="paintB">
+                    <span class="nav-icon">●</span>
+                    <span>Paint B</span>
+                </div>
+                <!-- 可以在这里继续添加更多子导航项 -->
+                <!--
+                <div class="sub-nav-item" data-sub="paintC">
+                    <span class="nav-icon">●</span>
+                    <span>Paint C</span>
+                </div>
+                -->
+            </div>
+                <div class="sub-page" id="paintA" style="display:block;">
+                    <p>So this game's genetic system is simple and useful.</p>
+                    <p>It doesn't use real Mendelian genetic laws. Instead, it uses an equal per-inheritance independent probability system, where traits are only visibly inherited from the child's parents.</p>
+                    <p>Here's how it works:</p>
+                    <p>Each gene position has two slots: primary and secondary.</p>
+                    <p>When inheritance occurs, the program first determines which parent the primary gene will come from. Then it uses a 75%/25% probability split to choose whether this gene is inherited from that parent's corresponding primary or secondary slot. The secondary gene then comes from the other parent, and the same process repeats.</p>
+                    <p>The advantage of this solution is that players can simply choose the traits they want, and their children will have a chance to inherit them. It's better than catching a random person on the street and hoping they carry the recessive gene you want.</p>
+                </div>
+                <div class="sub-page" id="paintB" style="display:none;">
+                    <p>这里是 Paint B 的系列作品。</p>
+                    <img src="images/paint-b-demo.jpg" alt="Paint B 示例" class="content-img" />
+                </div>
+                <!-- 对应添加更多子页面内容 -->
+                <!--
+                <div class="sub-page" id="paintC" style="display:none;">
+                    <p>这里是 Paint C 的系列作品。</p>
+                </div>
+                -->
+            </div>
+        </div>
     `,
     paints: `
         <h2>Paints</h2>
