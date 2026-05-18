@@ -40,17 +40,42 @@ const pageContent = {
     paints: `
         <h2>Paints</h2>
         <p>I guess I will put some paints on here.</p>
-        <div class="sub-tabs">
-            <button class="sub-tab-btn active" data-sub="paintA">Paint A</button>
-            <button class="sub-tab-btn" data-sub="paintB">Paint B</button>
-        </div>
-        <div class="sub-page" id="paintA" style="display:block;">
-            <p>crab,haha.</p>
-            <img src="images/crabman.png" alt="Paint A 示例" class="content-img" />
-        </div>
-        <div class="sub-page" id="paintB" style="display:none;">
-            <p>这里是 Paint B 的系列作品。</p>
-            <img src="images/paint-b-demo.jpg" alt="Paint B 示例" class="content-img" />
+        
+        <!-- 已替换为侧边栏式子导航布局 -->
+        <div class="sub-layout">
+            <div class="sub-sidebar">
+                <div class="sub-nav-item active" data-sub="paintA">
+                    <span class="nav-icon">●</span>
+                    <span>Paint A</span>
+                </div>
+                <div class="sub-nav-item" data-sub="paintB">
+                    <span class="nav-icon">●</span>
+                    <span>Paint B</span>
+                </div>
+                <!-- 可以在这里继续添加更多子导航项 -->
+                <!--
+                <div class="sub-nav-item" data-sub="paintC">
+                    <span class="nav-icon">●</span>
+                    <span>Paint C</span>
+                </div>
+                -->
+            </div>
+            <div class="sub-content">
+                <div class="sub-page" id="paintA" style="display:block;">
+                    <p>crab,haha.</p>
+                    <img src="images/crabman.png" alt="Paint A 示例" class="content-img" />
+                </div>
+                <div class="sub-page" id="paintB" style="display:none;">
+                    <p>这里是 Paint B 的系列作品。</p>
+                    <img src="images/paint-b-demo.jpg" alt="Paint B 示例" class="content-img" />
+                </div>
+                <!-- 对应添加更多子页面内容 -->
+                <!--
+                <div class="sub-page" id="paintC" style="display:none;">
+                    <p>这里是 Paint C 的系列作品。</p>
+                </div>
+                -->
+            </div>
         </div>
     `,
     works: `
@@ -141,28 +166,56 @@ function createStyle() {
             margin: 35px 0;
         }
 
-        /* 子标签样式 */
-        .sub-tabs { margin: 20px 0; }
-        .sub-tab-btn {
-            background: transparent;
-            border: 1px solid ${COLOR.line};
-            color: rgb(90, 79, 71);
-            padding: 6px 16px;
-            margin-right: 8px;
-            border-radius: 4px;
+        /* ========== 已替换为侧边栏式子导航样式 ========== */
+        .sub-layout {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .sub-sidebar {
+            width: 180px;
+            border-right: 1px solid ${COLOR.line};
+            padding-right: 20px;
+        }
+
+        .sub-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
-            transition: 0.25s;
+            transition: all 0.25s ease;
+            color: rgb(90, 79, 71);
         }
-        .sub-tab-btn.active {
-            background: ${COLOR.theme};
-            color: #fff;
-            border-color: ${COLOR.theme};
+
+        .sub-nav-item .nav-icon {
+            font-size: 8px;
+            color: ${COLOR.line};
+            transition: all 0.25s ease;
         }
-        .sub-tab-btn:hover:not(.active) {
-            background: ${COLOR.line};
-            color: #fff;
+
+        .sub-nav-item.active {
+            background: rgba(140, 109, 92, 0.1);
+            color: ${COLOR.theme};
+            font-weight: 500;
         }
+
+        .sub-nav-item.active .nav-icon {
+            color: ${COLOR.theme};
+            transform: scale(1.5);
+        }
+
+        .sub-nav-item:hover:not(.active) {
+            background: rgba(212, 197, 184, 0.2);
+        }
+
+        .sub-content {
+            flex: 1;
+        }
+
         .sub-page { margin-top: 16px; }
 
         /* 图片样式 */
@@ -191,6 +244,28 @@ function createStyle() {
             .wrap { flex-direction: column; }
             .sidebar { width: 100%; }
             .main { padding: 30px 20px; }
+            
+            /* 移动端响应式：子导航改为横向 */
+            .sub-layout {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .sub-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid ${COLOR.line};
+                padding-right: 0;
+                padding-bottom: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .sub-nav-item {
+                margin-bottom: 0;
+                padding: 8px 12px;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -254,8 +329,9 @@ function bindEvent() {
 function bindSubTabEvents() {
     const main = document.querySelector('.main');
     main.addEventListener('click', (e) => {
-        if (e.target.classList.contains('sub-tab-btn')) {
-            const allSubBtns = document.querySelectorAll('.sub-tab-btn');
+        // 兼容原有的按钮和新的侧边栏导航项
+        if (e.target.classList.contains('sub-tab-btn') || e.target.classList.contains('sub-nav-item')) {
+            const allSubBtns = document.querySelectorAll('.sub-tab-btn, .sub-nav-item');
             allSubBtns.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
 
@@ -468,3 +544,10 @@ function initCanvasAnimation() {
     }
     animate();
 }
+
+// ========== 初始化 ==========
+createStyle();
+renderPage();
+bindEvent();
+bindSubTabEvents();
+initCanvasAnimation();
