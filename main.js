@@ -43,7 +43,7 @@ note: `
                 <span>Crusader Kings III's Genetic System</span>
             </div>
 
-            <div class="sub-nav-item active" data-sub="Sorry_for_all">
+            <div class="sub-nav-item" data-sub="Sorry_for_all">
                 <span class="nav-icon">●</span>
                 <span>To the best girl in the world</span>
             </div>
