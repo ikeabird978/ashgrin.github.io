@@ -34,8 +34,6 @@ const pageContent = {
     `,
 note: `
     <h2>Note</h2>
-    <p>JavaScript / TypeScript / 前端布局随笔。</p>
-    <p>GitHub Pages 静态网站部署经验记录。</p>
     
     <div class="sub-layout">
         <div class="sub-sidebar">
