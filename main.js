@@ -44,6 +44,12 @@ note: `
                 <span class="nav-icon">●</span>
                 <span>Crusader Kings III's Genetic System</span>
             </div>
+
+            <div class="sub-nav-item active" data-sub="Sorry_for_all">
+                <span class="nav-icon">●</span>
+                <span>To the best girl in the world</span>
+            </div>
+            
         </div>
         
         <!-- 必须的内容容器 -->
@@ -60,6 +66,24 @@ note: `
                 
                 <img src="images/ck3.png" alt="gdc" class="content-img" />
             </div>
+
+            <div class="sub-page" id="Sorry_for_all" style="display:none;">
+                <p>Sorry for wasting your time. You are the best. It’s my fault.</p>
+                <p>I’m an isolated and lonely person. I have no friends, no one close to me.</p>
+                <p>I’ve never liked anyone before. The things I like have no conscience.</p>
+                <p>If my family were gone, I guess there would be no reason for me to live in this world anymore.</p>
+                <p>I actually like you — more than I like anyone else. Still, I don’t like other people.</p>
+                <p>You can find someone better, someone who loves you more than everything. But that person is not me.</p>
+                <p>My life is painful. My body and mind are decaying as time passes. The wonderful memories fade day after day.</p>
+                <p>I can never do anything really meaningful. All I have is just a meaningless life.</p>
+                <p>You don’t need to stay with a person like me.</p>
+                <p>And you shouldn’t stay with a person like me.</p>
+                <p>Just find someone better. I’m sure you deserve it.</p>
+                <p>May God bless you.</p>
+                
+                
+            </div>
+            
         </div>
     </div>
 `,
