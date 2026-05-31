@@ -47,6 +47,11 @@ note: `
                 <span class="nav-icon">●</span>
                 <span>To the best girl in the world</span>
             </div>
+
+            <div class="sub-nav-item" data-sub="PCA_and_structure_tensor">
+                <span class="nav-icon">●</span>
+                <span>To the best girl in the world</span>
+            </div>
             
         </div>
         
@@ -81,7 +86,26 @@ note: `
                 
                 
             </div>
-            
+
+<div class="sub-page" id="PCA_and_structure_tensor" style="display:none;">
+    <p>Principal Component Analysis (PCA) essentially aims to obtain variables called "principal components" (all individual principal components form a random vector) through linear combinations of the original variables. These variables better capture the variation in the original data, are uncorrelated with each other (orthogonal, covariance zero), are dimensionless, and allow for dimensionality reduction by discarding some principal components (which is quite similar to SVD).</p>
+    <p>In practice, PCA is performed by applying eigenvalue decomposition (EVD) to the covariance matrix of the data, then projecting the original data onto the eigenvectors. The projected vectors along the eigenvector directions are called the principal components.</p>
+    <p>Why is this correct? Because each principal component can be expressed as \( Z_i = a_i^T x \). Maximizing the data variation is equivalent to maximizing the variance of the components. Assuming the data are standardized, the variance is given by \( Z_i Z_i^T = a_i^T x x^T a_i = a_i^T \Sigma a_i \), where \( \Sigma \) is the covariance matrix. This is a quadratic form. The extremum of a quadratic form for a real symmetric matrix is attained at its eigenvectors, and the extremal values are the eigenvalues. Moreover, the eigenvectors of a real symmetric matrix are orthogonal, which exactly satisfies the requirement that the transformed data be orthogonal.</p>
+    <p>That is PCA.</p>
+    <p>By the way, there is also an SVD-based approach to PCA, which lies at the intersection of SVD and EVD. It can be shown that the right matrix from SVD corresponds to the eigenvector matrix, and the singular values are the square roots of the eigenvalues. Performing SVD directly on the original data matrix avoids explicitly constructing the covariance matrix. Performance then depends on whether solving high-degree equations or matrix operations is faster. From the SVD perspective, one can also discard some principal components to achieve dimensionality reduction.</p>
+    <p>The structure tensor is essentially the covariance matrix of gradients. Applying PCA to the structure tensor is a common operation.</p>
+    <p>If we perform PCA on the gradient at a single point, there is obviously only one sample, and the data are already standardized. After constructing the covariance matrix and performing EVD, we obtain eigenvectors and eigenvalues. In fact, the two eigenvectors correspond to the gradient direction and its normal, because from the SVD perspective, the two eigenvectors represent the directions of maximum and minimum variation, and the eigenvalues indicate the strength of the linear transformation along those directions.</p>
+    <p>You might then ask: Why go through all this trouble instead of directly using the gradient to compute the normal?</p>
+    <p>There are two main reasons:</p>
+    <p>1. Noise and incoherence: The gradient at a single point is generally noisy and incoherent. We typically apply Gaussian filtering to obtain a smoothed gradient that reflects the local neighborhood. However, gradients can be positive or negative, and direct Gaussian filtering may cause cancellation. For example, if adjacent points have gradients (1,0) and (-0.9999,0), the filtered gradient becomes approximately (0.0001,0), leading the analysis to conclude that there is no gradient in that direction. Constructing the covariance matrix first introduces a squaring operation, so that Gaussian filtering does not lose information. The resulting gradient then truly represents the desired smoothed, local variation.</p>
+    <p>2. Need for principal components and eigenvalues: More precisely, we need the eigenvalues for various interesting applications. The most widespread application is gradient-based anisotropy.</p>
+    <p>Intuitively, the two eigenvalues represent the strength of data variance along their respective directions. If one eigenvalue is large and the other is small, it indicates strong variation in one direction and smoothness in the orthogonal direction, implying a texture direction. If both are large, the local region is chaotic with no dominant orientation (isotropic texture). If both are small, the region is flat (uniform texture).</p>
+    <p>To draw an analogy with painting: the cross-section of the brush against the paper is not always a circle; it depends on the orientation and pressure of the stroke. If we want to modify the sampling kernel accordingly, we need to achieve anisotropy in sampling, adapting the kernel in real time based on local information.</p>
+    <p>We could certainly construct principal components and stretch the sampling kernel from a circle into an ellipse based on these components. However, a problem arises: the eigenvalues can vary drastically—large values might cause the sampling range to become nearly infinite, which is undesirable.</p>
+    <p>Therefore, we typically use a correlation coefficient \( A = \frac{\lambda_1 - \lambda_2}{\lambda_1 + \lambda_2 + C} \) to stretch the major and minor axes of the kernel. Here, \( C \) is a small constant to prevent division by zero. When \( A = 0 \), the two eigenvalues are equal, indicating either isotropic texture or a flat region. As \( A \) approaches 1, a dominant texture direction emerges.</p>
+    <p>Below is a shader implementing a Kuwahara‑type filter that uses an anisotropic sampling kernel. The sampling points are determined via an affine transformation: first define an elliptical kernel, rotate it to align with the eigenvector directions, then transform the ellipse into a circle, and finally check whether the transformed original coordinates lie inside the circle.</p>
+</div>
+
         </div>
     </div>
 `,
