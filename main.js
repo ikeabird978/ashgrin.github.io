@@ -645,7 +645,7 @@ function loadMathJax() {
   };
   // 动态插入 MathJax CDN 到 head 中
   const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+  script.src = './Mathjax/tex-mml-chtml.js';
   script.id = 'MathJax-script';
   script.async = true;
   document.head.appendChild(script);
