@@ -50,7 +50,7 @@ note: `
 
             <div class="sub-nav-item" data-sub="PCA_and_structure_tensor">
                 <span class="nav-icon">●</span>
-                <span>To the best girl in the world</span>
+                <span>PCA and structure tensor</span>
             </div>
             
         </div>
