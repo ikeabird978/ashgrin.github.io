@@ -633,9 +633,28 @@ function initCanvasAnimation() {
     animate();
 }
 
+function loadMathJax() {
+  // 配置 MathJax (支持 $ 行内公式 + $$ 块级公式)
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']], // 启用 $ 包裹行内公式
+      displayMath: [['$$', '$$'], ['\\[', '\\]']], // 启用 $$ 包裹块级公式
+      processEscapes: true
+    },
+    svg: { fontCache: 'global' }
+  };
+  // 动态插入 MathJax CDN 到 head 中
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+  script.id = 'MathJax-script';
+  script.async = true;
+  document.head.appendChild(script);
+}
+
 // ========== 初始化 ==========
 createStyle();
 renderPage();
 bindEvent();
 bindSubTabEvents();
 initCanvasAnimation();
+loadMathJax();
