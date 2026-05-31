@@ -653,8 +653,9 @@ function loadMathJax() {
 
 // ========== 初始化 ==========
 createStyle();
+loadMathJax();
 renderPage();
 bindEvent();
 bindSubTabEvents();
 initCanvasAnimation();
-loadMathJax();
+
