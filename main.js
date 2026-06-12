@@ -26,11 +26,15 @@ const pageContent = {
         <div class="line"></div>
         <p>设计理念：少即是多，剥离一切无效装饰。</p>
     `,
-    about: `
+about: `
         <h2>About Me</h2>
         <p>Is 2026.5.17 now,I just insomina.</p>
         <p>Since I have no things to do so I build this blog to record somethings.</p>
         <p>Hope things can lucky.</p>
+        <hr>
+        <p>Is 2026.6.12 now.</p>
+        <p>花・太陽・雨</p>
+        <p>友よ、なぜこんなことをしてしまったの？</p>
     `,
 note: `
     <h2>Note</h2>
