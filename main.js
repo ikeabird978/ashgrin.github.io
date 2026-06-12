@@ -26,7 +26,7 @@ const pageContent = {
         <div class="line"></div>
         <p>设计理念：少即是多，剥离一切无效装饰。</p>
     `,
-about: `
+    about: `
         <h2>About Me</h2>
         <p>Is 2026.5.17 now,I just insomina.</p>
         <p>Since I have no things to do so I build this blog to record somethings.</p>
@@ -35,84 +35,87 @@ about: `
         <p>Is 2026.6.12 now.</p>
         <p>花・太陽・雨</p>
         <p>友よ、なぜこんなことをしてしまったの？</p>
+
+        <!-- 音乐播放按钮与音频元素 -->
+        <button id="aboutMusicBtn">▶ Play Music</button>
+        <audio id="aboutAudio" src="music.mp3" preload="auto"></audio>
     `,
-note: `
-    <h2>Note</h2>
-    
-    <div class="sub-layout">
-        <div class="sub-sidebar">
-            <!-- 只保留遗传系统这一个导航项 -->
-            <div class="sub-nav-item active" data-sub="ck3-genetics">
-                <span class="nav-icon">●</span>
-                <span>Crusader Kings III's Genetic System</span>
-            </div>
+    note: `
+        <h2>Note</h2>
+        
+        <div class="sub-layout">
+            <div class="sub-sidebar">
+                <!-- 只保留遗传系统这一个导航项 -->
+                <div class="sub-nav-item active" data-sub="ck3-genetics">
+                    <span class="nav-icon">●</span>
+                    <span>Crusader Kings III's Genetic System</span>
+                </div>
 
-            <div class="sub-nav-item" data-sub="Sorry_for_all">
-                <span class="nav-icon">●</span>
-                <span>To the best girl in the world</span>
-            </div>
+                <div class="sub-nav-item" data-sub="Sorry_for_all">
+                    <span class="nav-icon">●</span>
+                    <span>To the best girl in the world</span>
+                </div>
 
-            <div class="sub-nav-item" data-sub="PCA_and_structure_tensor">
-                <span class="nav-icon">●</span>
-                <span>PCA and structure tensor</span>
+                <div class="sub-nav-item" data-sub="PCA_and_structure_tensor">
+                    <span class="nav-icon">●</span>
+                    <span>PCA and structure tensor</span>
+                </div>
+                
             </div>
             
-        </div>
-        
-        <!-- 必须的内容容器 -->
-        <div class="sub-content">
-            <!-- id使用文章缩写命名，语义清晰且符合HTML规范 -->
-            <div class="sub-page" id="ck3-genetics" style="display:block;">
-                <p>So this game's genetic system is simple and useful.</p>
-                <p>It doesn't use real Mendelian genetic laws. Instead, it uses an equal per-inheritance independent probability system, where traits are only visibly inherited from the child's parents.</p>
-                <p>Here's how it works:</p>
-                <p>Each gene position has two slots: primary and secondary.</p>
-                <p>When inheritance occurs, the program first determines which parent the primary gene will come from. Then it uses a 75%/25% probability split to choose whether this gene is inherited from that parent's corresponding primary or secondary slot. The secondary gene then comes from the other parent, and the same process repeats.</p>
-                <p>The advantage of this solution is that players can simply choose the traits they want, and their children will have a chance to inherit them. It's better than catching a random person on the street and hoping they carry the recessive gene you want.</p>
-                <p>龙生龙，凤生凤。</p>
-                
-                <img src="images/ck3.png" alt="gdc" class="content-img" />
+            <!-- 必须的内容容器 -->
+            <div class="sub-content">
+                <!-- id使用文章缩写命名，语义清晰且符合HTML规范 -->
+                <div class="sub-page" id="ck3-genetics" style="display:block;">
+                    <p>So this game's genetic system is simple and useful.</p>
+                    <p>It doesn't use real Mendelian genetic laws. Instead, it uses an equal per-inheritance independent probability system, where traits are only visibly inherited from the child's parents.</p>
+                    <p>Here's how it works:</p>
+                    <p>Each gene position has two slots: primary and secondary.</p>
+                    <p>When inheritance occurs, the program first determines which parent the primary gene will come from. Then it uses a 75%/25% probability split to choose whether this gene is inherited from that parent's corresponding primary or secondary slot. The secondary gene then comes from the other parent, and the same process repeats.</p>
+                    <p>The advantage of this solution is that players can simply choose the traits they want, and their children will have a chance to inherit them. It's better than catching a random person on the street and hoping they carry the recessive gene you want.</p>
+                    <p>龙生龙，凤生凤。</p>
+                    
+                    <img src="images/ck3.png" alt="gdc" class="content-img" />
+                </div>
+
+                <div class="sub-page" id="Sorry_for_all" style="display:none;">
+                    <p>Sorry for wasting your time. You are the best. It’s my fault.</p>
+                    <p>I’m an isolated and lonely person. I have no friends, no one close to me.</p>
+                    <p>I’ve never liked anyone before. The things I like have no conscience.</p>
+                    <p>If my family were gone, I guess there would be no reason for me to live in this world anymore.</p>
+                    <p>I actually like you — more than I like anyone else. Still, I don’t like other people.</p>
+                    <p>You can find someone better, someone who loves you more than everything. But that person is not me.</p>
+                    <p>My life is painful. My body and mind are decaying as time passes. The wonderful memories fade day after day.</p>
+                    <p>I can never do anything really meaningful. All I have is just a meaningless life.</p>
+                    <p>You don’t need to stay with a person like me.</p>
+                    <p>And you shouldn’t stay with a person like me.</p>
+                    <p>Just find someone better. I’m sure you deserve it.</p>
+                    <p>May God bless you.</p>
+                    
+                    
+                </div>
+
+                <div class="sub-page" id="PCA_and_structure_tensor" style="display:none;">
+                    <p>Principal Component Analysis (PCA) essentially aims to obtain variables called "principal components" (all individual principal components form a random vector) through linear combinations of the original variables. These variables better capture the variation in the original data, are uncorrelated with each other (orthogonal, covariance zero), are dimensionless, and allow for dimensionality reduction by discarding some principal components (which is quite similar to SVD).</p>
+                    <p>In practice, PCA is performed by applying eigenvalue decomposition (EVD) to the covariance matrix of the data, then projecting the original data onto the eigenvectors. The projected vectors along the eigenvector directions are called the principal components.</p>
+                    <p>Why is this correct? Because each principal component can be expressed as \( Z_i = a_i^T x \). Maximizing the data variation is equivalent to maximizing the variance of the components. Assuming the data are standardized, the variance is given by \( Z_i Z_i^T = a_i^T x x^T a_i = a_i^T \Sigma a_i \), where \( \Sigma \) is the covariance matrix. This is a quadratic form. The extremum of a quadratic form for a real symmetric matrix is attained at its eigenvectors, and the extremal values are the eigenvalues. Moreover, the eigenvectors of a real symmetric matrix are orthogonal, which exactly satisfies the requirement that the transformed data be orthogonal.</p>
+                    <p>That is PCA.</p>
+                    <p>By the way, there is also an SVD-based approach to PCA, which lies at the intersection of SVD and EVD. It can be shown that the right matrix from SVD corresponds to the eigenvector matrix, and the singular values are the square roots of the eigenvalues. Performing SVD directly on the original data matrix avoids explicitly constructing the covariance matrix. Performance then depends on whether solving high-degree equations or matrix operations is faster. From the SVD perspective, one can also discard some principal components to achieve dimensionality reduction.</p>
+                    <p>The structure tensor is essentially the covariance matrix of gradients. Applying PCA to the structure tensor is a common operation.</p>
+                    <p>If we perform PCA on the gradient at a single point, there is obviously only one sample, and the data are already standardized. After constructing the covariance matrix and performing EVD, we obtain eigenvectors and eigenvalues. In fact, the two eigenvectors correspond to the gradient direction and its normal, because from the SVD perspective, the two eigenvectors represent the directions of maximum and minimum variation, and the eigenvalues indicate the strength of the linear transformation along those directions.</p>
+                    <p>You might then ask: Why go through all this trouble instead of directly using the gradient to compute the normal?</p>
+                    <p>There are two main reasons:</p>
+                    <p>1. Noise and incoherence: The gradient at a single point is generally noisy and incoherent. We typically apply Gaussian filtering to obtain a smoothed gradient that reflects the local neighborhood. However, gradients can be positive or negative, and direct Gaussian filtering may cause cancellation. For example, if adjacent points have gradients (1,0) and (-0.9999,0), the filtered gradient becomes approximately (0.0001,0), leading the analysis to conclude that there is no gradient in that direction. Constructing the covariance matrix first introduces a squaring operation, so that Gaussian filtering does not lose information. The resulting gradient then truly represents the desired smoothed, local variation.</p>
+                    <p>2. Need for principal components and eigenvalues: More precisely, we need the eigenvalues for various interesting applications. The most widespread application is gradient-based anisotropy.</p>
+                    <p>Intuitively, the two eigenvalues represent the strength of data variance along their respective directions. If one eigenvalue is large and the other is small, it indicates strong variation in one direction and smoothness in the orthogonal direction, implying a texture direction. If both are large, the local region is chaotic with no dominant orientation (isotropic texture). If both are small, the region is flat (uniform texture).</p>
+                    <p>To draw an analogy with painting: the cross-section of the brush against the paper is not always a circle; it depends on the orientation and pressure of the stroke. If we want to modify the sampling kernel accordingly, we need to achieve anisotropy in sampling, adapting the kernel in real time based on local information.</p>
+                    <p>We could certainly construct principal components and stretch the sampling kernel from a circle into an ellipse based on these components. However, a problem arises: the eigenvalues can vary drastically—large values might cause the sampling range to become nearly infinite, which is undesirable.</p>
+                    <p>Therefore, we typically use a correlation coefficient \( A = \frac{\lambda_1 - \lambda_2}{\lambda_1 + \lambda_2 + C} \) to stretch the major and minor axes of the kernel. Here, \( C \) is a small constant to prevent division by zero. When \( A = 0 \), the two eigenvalues are equal, indicating either isotropic texture or a flat region. As \( A \) approaches 1, a dominant texture direction emerges.</p>
+                    <p>Below is a shader implementing a Kuwahara‑type filter that uses an anisotropic sampling kernel. The sampling points are determined via an affine transformation: first define an elliptical kernel, rotate it to align with the eigenvector directions, then transform the ellipse into a circle, and finally check whether the transformed original coordinates lie inside the circle.</p>
+                </div>
             </div>
-
-            <div class="sub-page" id="Sorry_for_all" style="display:none;">
-                <p>Sorry for wasting your time. You are the best. It’s my fault.</p>
-                <p>I’m an isolated and lonely person. I have no friends, no one close to me.</p>
-                <p>I’ve never liked anyone before. The things I like have no conscience.</p>
-                <p>If my family were gone, I guess there would be no reason for me to live in this world anymore.</p>
-                <p>I actually like you — more than I like anyone else. Still, I don’t like other people.</p>
-                <p>You can find someone better, someone who loves you more than everything. But that person is not me.</p>
-                <p>My life is painful. My body and mind are decaying as time passes. The wonderful memories fade day after day.</p>
-                <p>I can never do anything really meaningful. All I have is just a meaningless life.</p>
-                <p>You don’t need to stay with a person like me.</p>
-                <p>And you shouldn’t stay with a person like me.</p>
-                <p>Just find someone better. I’m sure you deserve it.</p>
-                <p>May God bless you.</p>
-                
-                
-            </div>
-
-<div class="sub-page" id="PCA_and_structure_tensor" style="display:none;">
-    <p>Principal Component Analysis (PCA) essentially aims to obtain variables called "principal components" (all individual principal components form a random vector) through linear combinations of the original variables. These variables better capture the variation in the original data, are uncorrelated with each other (orthogonal, covariance zero), are dimensionless, and allow for dimensionality reduction by discarding some principal components (which is quite similar to SVD).</p>
-    <p>In practice, PCA is performed by applying eigenvalue decomposition (EVD) to the covariance matrix of the data, then projecting the original data onto the eigenvectors. The projected vectors along the eigenvector directions are called the principal components.</p>
-    <p>Why is this correct? Because each principal component can be expressed as \( Z_i = a_i^T x \). Maximizing the data variation is equivalent to maximizing the variance of the components. Assuming the data are standardized, the variance is given by \( Z_i Z_i^T = a_i^T x x^T a_i = a_i^T \Sigma a_i \), where \( \Sigma \) is the covariance matrix. This is a quadratic form. The extremum of a quadratic form for a real symmetric matrix is attained at its eigenvectors, and the extremal values are the eigenvalues. Moreover, the eigenvectors of a real symmetric matrix are orthogonal, which exactly satisfies the requirement that the transformed data be orthogonal.</p>
-    <p>That is PCA.</p>
-    <p>By the way, there is also an SVD-based approach to PCA, which lies at the intersection of SVD and EVD. It can be shown that the right matrix from SVD corresponds to the eigenvector matrix, and the singular values are the square roots of the eigenvalues. Performing SVD directly on the original data matrix avoids explicitly constructing the covariance matrix. Performance then depends on whether solving high-degree equations or matrix operations is faster. From the SVD perspective, one can also discard some principal components to achieve dimensionality reduction.</p>
-    <p>The structure tensor is essentially the covariance matrix of gradients. Applying PCA to the structure tensor is a common operation.</p>
-    <p>If we perform PCA on the gradient at a single point, there is obviously only one sample, and the data are already standardized. After constructing the covariance matrix and performing EVD, we obtain eigenvectors and eigenvalues. In fact, the two eigenvectors correspond to the gradient direction and its normal, because from the SVD perspective, the two eigenvectors represent the directions of maximum and minimum variation, and the eigenvalues indicate the strength of the linear transformation along those directions.</p>
-    <p>You might then ask: Why go through all this trouble instead of directly using the gradient to compute the normal?</p>
-    <p>There are two main reasons:</p>
-    <p>1. Noise and incoherence: The gradient at a single point is generally noisy and incoherent. We typically apply Gaussian filtering to obtain a smoothed gradient that reflects the local neighborhood. However, gradients can be positive or negative, and direct Gaussian filtering may cause cancellation. For example, if adjacent points have gradients (1,0) and (-0.9999,0), the filtered gradient becomes approximately (0.0001,0), leading the analysis to conclude that there is no gradient in that direction. Constructing the covariance matrix first introduces a squaring operation, so that Gaussian filtering does not lose information. The resulting gradient then truly represents the desired smoothed, local variation.</p>
-    <p>2. Need for principal components and eigenvalues: More precisely, we need the eigenvalues for various interesting applications. The most widespread application is gradient-based anisotropy.</p>
-    <p>Intuitively, the two eigenvalues represent the strength of data variance along their respective directions. If one eigenvalue is large and the other is small, it indicates strong variation in one direction and smoothness in the orthogonal direction, implying a texture direction. If both are large, the local region is chaotic with no dominant orientation (isotropic texture). If both are small, the region is flat (uniform texture).</p>
-    <p>To draw an analogy with painting: the cross-section of the brush against the paper is not always a circle; it depends on the orientation and pressure of the stroke. If we want to modify the sampling kernel accordingly, we need to achieve anisotropy in sampling, adapting the kernel in real time based on local information.</p>
-    <p>We could certainly construct principal components and stretch the sampling kernel from a circle into an ellipse based on these components. However, a problem arises: the eigenvalues can vary drastically—large values might cause the sampling range to become nearly infinite, which is undesirable.</p>
-    <p>Therefore, we typically use a correlation coefficient \( A = \frac{\lambda_1 - \lambda_2}{\lambda_1 + \lambda_2 + C} \) to stretch the major and minor axes of the kernel. Here, \( C \) is a small constant to prevent division by zero. When \( A = 0 \), the two eigenvalues are equal, indicating either isotropic texture or a flat region. As \( A \) approaches 1, a dominant texture direction emerges.</p>
-    <p>Below is a shader implementing a Kuwahara‑type filter that uses an anisotropic sampling kernel. The sampling points are determined via an affine transformation: first define an elliptical kernel, rotate it to align with the eigenvector directions, then transform the ellipse into a circle, and finally check whether the transformed original coordinates lie inside the circle.</p>
-</div>
-
         </div>
-    </div>
-`,
+    `,
     paints: `
         <h2>Paints</h2>
         <p>I guess I will put some paints on here.</p>
@@ -128,13 +131,6 @@ note: `
                     <span class="nav-icon">●</span>
                     <span>Paint B</span>
                 </div>
-                <!-- 可以在这里继续添加更多子导航项 -->
-                <!--
-                <div class="sub-nav-item" data-sub="paintC">
-                    <span class="nav-icon">●</span>
-                    <span>Paint C</span>
-                </div>
-                -->
             </div>
             <div class="sub-content">
                 <div class="sub-page" id="paintA" style="display:block;">
@@ -145,12 +141,6 @@ note: `
                     <p>这里是 Paint B 的系列作品。</p>
                     <img src="images/paint-b-demo.jpg" alt="Paint B 示例" class="content-img" />
                 </div>
-                <!-- 对应添加更多子页面内容 -->
-                <!--
-                <div class="sub-page" id="paintC" style="display:none;">
-                    <p>这里是 Paint C 的系列作品。</p>
-                </div>
-                -->
             </div>
         </div>
     `,
@@ -220,7 +210,6 @@ function createStyle() {
             position: relative;
             z-index: 1;
             background: rgba(249, 245, 240, 0.35);
-            /* 模糊已移除 */
         }
         .page { display: none; }
         .page.show { display: block; }
@@ -303,6 +292,22 @@ function createStyle() {
             border-radius: 6px;
             border: 1px solid ${COLOR.line};
             box-shadow: 2px 4px 12px rgba(139, 109, 93, 0.15);
+        }
+
+        /* 音乐按钮样式（集成） */
+        #aboutMusicBtn {
+            margin-top: 20px;
+            padding: 8px 20px;
+            background: rgba(140, 109, 92, 0.9);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #aboutMusicBtn:hover {
+            background: rgb(140, 109, 92);
         }
 
         /* Canvas 背景层 */
@@ -421,6 +426,31 @@ function bindSubTabEvents() {
     });
 }
 
+// ========== About 页音乐播放控制 ==========
+function bindAboutMusic() {
+    const btn = document.getElementById('aboutMusicBtn');
+    const audio = document.getElementById('aboutAudio');
+    if (!btn || !audio) return;
+
+    btn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play().catch(() => {
+                alert('浏览器禁止自动播放，请再次点击按钮');
+            });
+            btn.textContent = '⏸ Pause';
+        } else {
+            audio.pause();
+            btn.textContent = '▶ Play Music';
+        }
+    });
+
+    // 歌曲播放完毕时重置按钮文字
+    audio.addEventListener('ended', () => {
+        btn.textContent = '▶ Play Music';
+    });
+}
+
+// ========== Canvas 背景动画 ==========
 function initCanvasAnimation() {
     // ====================== 【常量配置】 ======================
     const CANVAS_CONFIG = {
@@ -637,6 +667,7 @@ function initCanvasAnimation() {
     animate();
 }
 
+// ========== MathJax 加载 ==========
 function loadMathJax() {
   // 配置 MathJax (支持 $ 行内公式 + $$ 块级公式)
   window.MathJax = {
@@ -661,5 +692,5 @@ loadMathJax();
 renderPage();
 bindEvent();
 bindSubTabEvents();
+bindAboutMusic();   // 绑定音乐按钮事件
 initCanvasAnimation();
-
